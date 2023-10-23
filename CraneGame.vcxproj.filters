@@ -145,6 +145,15 @@
     <Filter Include="Scene\TitleScene">
       <UniqueIdentifier>{596297e9-4c16-498a-961b-ec238f859359}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{05705bda-1332-42c3-847a-ff3f1793e97a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Nakamura">
+      <UniqueIdentifier>{f44261a7-87cd-4e3c-9e37-dcd3463584e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Nakamura\DrawTexture">
+      <UniqueIdentifier>{c4f8c28a-37e9-4d7a-a661-31927a1930e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -161,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
       <Filter>Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\Nakamura\DrawTexture.cpp">
+      <Filter>Libraries\Nakamura\DrawTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -805,6 +817,9 @@
     </ClInclude>
     <ClInclude Include="Scene\TitleScene\TitleScene.h">
       <Filter>Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\Nakamura\DrawTexture.hpp">
+      <Filter>Libraries\Nakamura\DrawTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
