@@ -22,13 +22,13 @@ void RDebugScene::Initialize()
 
 	// かえるの情報
 	m_tex->AddTexture(U"Test", U"../Resources/Textures/Test.png");
-	m_tex->SetTexInfo(U"Test", { 740,240 }, 1.0, 30.0, false, false);
-	m_polygons.push_back(m_tex->GetPolygon(U"Test", m_tex->GetTexInfo(U"Test").POS));
+	m_tex->SetTexInfo(U"Test", { 500,240 }, 1.0, 0.0, false, false);
+	m_polygons.push_back(m_tex->GetPolygon(U"Test"));
 
 	// ステージの情報
 	m_tex->AddTexture(U"Stage", U"../Resources/Textures/Stage.png");
-	m_tex->SetTexInfo(U"Stage", { 0,0 }, 1.0, 0.0, false, false);
-	m_polygons.push_back(m_tex->GetPolygon(U"Stage", m_tex->GetTexInfo(U"Stage").POS));
+	m_tex->SetTexInfo(U"Stage", { 640,360 }, 1.0, 0.0, false, false);
+	m_polygons.push_back(m_tex->GetPolygon(U"Stage"));
 
 	// 対応キーに登録
 	m_keys.push_back(U"Test");
@@ -41,11 +41,13 @@ void RDebugScene::Update()
 
 void RDebugScene::Render()
 {
+	m_tex->SetTexInfo(U"Test", { 500,240 }, 1.0, m_tex->GetTexInfo(U"Test").ROTATE + 1, false, false);
+
 	// 画像を表示
 	for (auto& i : m_keys)
 	{
-		m_tex->Draw(i, m_tex->GetTexInfo(i).POS);
-		m_tex->GetPolygon(i, m_tex->GetTexInfo(i).POS, true);
+		m_tex->Draw(i);
+		m_tex->GetPolygon(i, true, Palette::Greenyellow);
 	}
 }
 

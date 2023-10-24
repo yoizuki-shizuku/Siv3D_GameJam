@@ -62,14 +62,9 @@ public:
 	/// 登録したテクスチャを描画する関数
 	/// </summary>
 	/// <param name="key">登録キーの文字列(U"文字列")</param>
-	/// <param name="pos">描画する位置</param>
-	/// <param name="scale">拡大率(デフォルトは1.0)</param>
-	/// <param name="rotate">回転率(デフォルトは0.0)</param>
-	/// <param name="mirrored">左右反転フラグ(デフォルトはfalse)</param>
-	/// <param name="flipped">上下反転フラグ(デフォルトはfalse)</param>
+	/// <param name="rotateAt">Trueで起動</param>
 	/// <returns>なし</returns>
-	void Draw(const char32_t* key, const Vec2& pos, const double& scale = 1.0, const double& rotate = 0.0,
-		const bool& mirrored = false, const bool& flipped = false);
+	void Draw(const char32_t* key, const bool& rotateAt = false);
 
 	/// <summary>
 	/// イメージを返す関数
@@ -82,11 +77,10 @@ public:
 	/// ポリゴンゲッター
 	/// </summary>
 	/// <param name="key">登録キーの文字列(U"文字列")</param>
-	/// <param name="pos">表示位置</param>
 	/// <param name="show">ポリゴンの可視化</param>
 	/// <param name="color">Gizmoの色</param>
 	/// <returns>テクスチャのポリゴン判定</returns>
-	const Polygon& GetPolygon(const char32_t* key, const Vec2& pos = Vec2{0,0}, const bool& show = false, const ColorF& color = Palette::Yellow);
+	const Polygon& GetPolygon(const char32_t* key,const bool& show = false, const ColorF& color = Palette::Yellow);
 
 	/// <summary>
 	/// 画像に対応した情報

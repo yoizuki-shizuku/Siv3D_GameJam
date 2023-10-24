@@ -55,14 +55,9 @@ void DrawTexture::AddTexture(const char32_t* key, const char32_t* path)
 /// 登録したテクスチャを描画する関数
 /// </summary>
 /// <param name="key">登録キーの文字列(U"文字列")</param>
-/// <param name="pos">描画する位置</param>
-/// <param name="scale">拡大率(デフォルトは1.0)</param>
-/// <param name="rotate>回転率(デフォルトは0.0)</param>
-/// <param name="mirrored">左右反転フラグ(デフォルトはfalse)</param>
-/// <param name="flipped">上下反転フラグ(デフォルトはfalse)</param>
+/// <param name="rotateAt">Trueで起動</param>
 /// <returns>なし</returns>
-void DrawTexture::Draw(const char32_t* key, const Vec2& pos, const double& scale, const double& rotate,
-	const bool& mirrored, const bool& flipped)
+void DrawTexture::Draw(const char32_t* key, const bool& rotateAt)
 {
 	// イテレータを取得
 	std::map<const char32_t*, Texture>::const_iterator _it = m_textures.find(key);
@@ -72,11 +67,22 @@ void DrawTexture::Draw(const char32_t* key, const Vec2& pos, const double& scale
 		// テクスチャが見つかれば処理をする
 		if (_it != m_textures.end())
 		{
-			// 情報を保存しておく
-			_in->second.set(pos, scale, rotate, mirrored, flipped);
-
-			// 左右反転、上下反転、拡大率、回転率、描画(座標指定)
-			_it->second.mirrored(mirrored).flipped(flipped).scaled(scale).rotated(rotate).draw(pos, Palette::White);
+			if (rotateAt)
+			{
+				_it->second.mirrored(_in->second.MIRRORED).			// 左右の向き
+					flipped(_in->second.FLIPPED).					// 上下の向き
+					scaled(_in->second.SCALE).						// 拡大率
+					rotatedAt(_in->second.POS, _in->second.ROTATE). // 回転率(00軸)
+					drawAt(_in->second.POS, Palette::White);		// 座標指定して描画
+			}
+			else
+			{
+				_it->second.mirrored(_in->second.MIRRORED).			// 左右の向き
+					flipped(_in->second.FLIPPED).					// 上下の向き
+					scaled(_in->second.SCALE).						// 拡大率
+					rotated(_in->second.ROTATE).					// 回転率(POS軸)
+					drawAt(_in->second.POS, Palette::White);		// 座標指定して描画
+			}
 		}
 		else
 		{
@@ -113,16 +119,16 @@ const Image& DrawTexture::GetImage(const char32_t* key)
 /// ポリゴンゲッター
 /// </summary>
 /// <param name="key">登録キーの文字列(U"文字列")</param>
-/// <param name="pos">表示位置</param>
 /// <param name="show">ポリゴンの可視化</param>
 /// <param name="color">Gizmoの色</param>
 /// <returns>テクスチャのポリゴン判定</returns>
-const Polygon& DrawTexture::GetPolygon(const char32_t* key, const Vec2& pos, const bool& show, const ColorF& color)
+const Polygon& DrawTexture::GetPolygon(const char32_t* key,const bool& show, const ColorF& color)
 {
 	// アルファ値 1 以上の領域を Polygon 化する
 	const Polygon _polygon = GetImage(key).alphaToPolygon(1, AllowHoles::No);
 
 	std::map<const char32_t*, TexInfo>::iterator _in = m_infos.find(key);
+	_polygon.movedBy(_in->second.POS);
 	_polygon.scaled(_in->second.SCALE);
 	_polygon.rotated(_in->second.ROTATE);
 
@@ -132,7 +138,7 @@ const Polygon& DrawTexture::GetPolygon(const char32_t* key, const Vec2& pos, con
 	// Trueなら描画する
 	if (show)
 	{
-		_simple.movedBy(pos).draw(ColorF{ color,0.5 }).drawWireframe(2, color);
+		_simple.draw(ColorF{ color,0.5 }).drawWireframe(2, color);
 	}
 
 	return _simple;
@@ -171,5 +177,5 @@ void DrawTexture::SetTexInfo(const char32_t* key, const Vec2& pos, const double&
 	_texInfo.MIRRORED = mirrored;
 	_texInfo.FLIPPED = flipped;
 
-	m_infos[_it->first] = _texInfo;
+	_it->second = _texInfo;
 }
