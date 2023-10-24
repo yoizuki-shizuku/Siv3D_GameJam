@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "MyScene.h"
+#include "MyTransition.h"
 
 namespace MyClass
 {
@@ -26,6 +27,8 @@ namespace MyClass
 	private:
 		std::unique_ptr<MyClass::Scene> m_currentScene;
 		MyClass::Scene* m_nextScene;
+
+		std::unique_ptr<Transition> m_transition;
 
 	};
 }

@@ -10,6 +10,9 @@ MyClass::SceneManager::SceneManager() :
 
 void MyClass::SceneManager::Initialize()
 {
+	m_transition = std::make_unique<Transition>();
+	m_transition->Initialize();
+
 	m_nextScene = new TitleScene();
 
 	CreateScene();
@@ -17,10 +20,13 @@ void MyClass::SceneManager::Initialize()
 
 void MyClass::SceneManager::Update()
 {
+	m_transition->Update();
+
 	bool changeSceneFlag = false;
 
 	if (m_currentScene)
 	{
+		m_currentScene->CommonUpdete();
 		m_currentScene->Update();
 		changeSceneFlag = m_currentScene->GetChangeScene();
 	}
@@ -34,11 +40,15 @@ void MyClass::SceneManager::Update()
 void MyClass::SceneManager::Render()
 {
 	if (m_currentScene) m_currentScene->Render();
+
+	m_transition->Render();
 }
 
 void MyClass::SceneManager::Finalize()
 {
 	DeleteScene();
+
+	m_transition->Finalize();
 }
 
 bool MyClass::SceneManager::GetExitGame()
@@ -55,6 +65,9 @@ void MyClass::SceneManager::CreateScene()
 	m_nextScene = nullptr;
 
 	m_currentScene->Initialize();
+	m_currentScene->SetTransition(m_transition.get());
+
+	m_transition->StartFadeIn();
 }
 
 void MyClass::SceneManager::DeleteScene()
