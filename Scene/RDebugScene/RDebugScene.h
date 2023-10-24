@@ -30,7 +30,19 @@ private:
 
 	// ポリゴン
 	Array<const char32_t*> m_keys;
-	Array<Polygon> m_polygons;
+	Array<MultiPolygon> m_polygons;
+	Array<Texture> m_textures;
+
+	// 2D 物理演算のシミュレーションステップ（秒）
+	double m_stepTimer = (1.0 / 200.0);
+
+	// 2D 物理演算のシミュレーション蓄積時間（秒）
+	double m_tribulation;
+
+	// 2D 物理演算のワールド
+	P2World m_world;
+
+
 };
 
 #endif // RDEBUGSCENE
