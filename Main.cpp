@@ -13,6 +13,9 @@ void Main()
 
 	while (System::Update())
 	{
+		//	Printの出力をクリア
+		ClearPrint();
+
 		sceneManager->Update();
 		sceneManager->Render();
 

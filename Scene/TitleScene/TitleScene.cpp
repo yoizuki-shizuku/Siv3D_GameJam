@@ -9,6 +9,7 @@ TitleScene::TitleScene() :
 
 void TitleScene::Initialize()
 {
+	s3d::Scene::SetBackground(Palette::White);
 }
 
 void TitleScene::Update()
@@ -21,6 +22,7 @@ void TitleScene::Update()
 
 void TitleScene::Render()
 {
+	Print << U"TitleScene";
 }
 
 void TitleScene::Finalize()
