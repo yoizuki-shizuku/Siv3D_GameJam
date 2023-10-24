@@ -28,7 +28,9 @@ private:
 	// テクスチャ描画クラス
 	std::unique_ptr<DrawTexture> m_tex;
 
-	Vec2 m_pos;
+	// ポリゴン
+	Array<const char32_t*> m_keys;
+	Array<Polygon> m_polygons;
 };
 
 #endif // RDEBUGSCENE
