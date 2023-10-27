@@ -38,7 +38,7 @@ void CraneBody_MoveState::Update()
 	}
 
 	// 横移動最低値より超えており、スペースが離された瞬間
-	if (bodyParts->GetFirstPos().x + MIN_POS_X >=
+	if (bodyParts->GetFirstPos().x - MIN_POS_X >=
 		bodyPos.x && KeySpace.up() && !is_moved) 		is_moved = true;
 
 	// 上限下限設定

@@ -30,7 +30,7 @@ void Field::Initialize(P2World world)
 
 	// ポリゴンに当たり判定を付ける
 	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
-
+	m_polygonBody.setPos(Vec2(1280 / 2, 760 / 2));
 }
 
 void Field::Update(P2World world)
