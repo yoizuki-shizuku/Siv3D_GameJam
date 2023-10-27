@@ -28,7 +28,7 @@ void CraneArm::Initialize(P2World& world)
 	// 単純化した Polygon
 	Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 	// ポリゴンに当たり判定を付ける
-	m_polygonBody = world.createPolygon(P2Dynamic, Vec2(), simplifiedPolygon);
+	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
 }
 
 void CraneArm::Update(P2World& world)

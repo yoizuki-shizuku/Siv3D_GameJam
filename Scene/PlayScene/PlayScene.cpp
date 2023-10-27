@@ -13,6 +13,7 @@ void PlayScene::Initialize()
 {
 	// 2D 物理演算のシミュレーションステップ（秒）
 	constexpr double StepTime = (1.0 / 200.0);
+	StepTime;
 
 	// 2D 物理演算のシミュレーション蓄積時間（秒）
 	m_accumulatedTime = 0.0;
@@ -20,7 +21,7 @@ void PlayScene::Initialize()
 	// 2D 物理演算のワールド
 	m_p2World = std::make_unique<P2World>();
 
-	m_craneBody = std::make_unique<CraneBody>(Vec2(1100,70));
+	m_craneBody = std::make_unique<CraneBody>(Vec2(1130,70));
 	m_craneBody->Initialize(*m_p2World.get());
 
 	m_field = std::make_unique<Field>();
