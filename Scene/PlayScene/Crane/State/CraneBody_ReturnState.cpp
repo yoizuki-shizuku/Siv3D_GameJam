@@ -34,7 +34,7 @@ void CraneBody_ReturnState::Update()
 	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
 
 	// 初期位置まで移動 (到着時停止力を働かせる)
-	if (bodyPos.x <= bodyParts->GetFirstPos().x)
+	if (bodyPos.x <= bodyParts->GetFirstPos().x - 80)
 	{
 		m_accelerator += bodyParts->GetAccelerator().x;
 	}
