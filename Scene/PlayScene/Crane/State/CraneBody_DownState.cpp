@@ -36,7 +36,7 @@ void CraneBody_DownState::Update()
 {
 	Vec2 bodyPos = m_craneComponent->GetPos();
 
-	m_accelerator += ACCE_VAL;
+	m_accelerator += m_craneComponent->GetAccelerator().x;
 
 	if (bodyPos.y >= MAX_DOWN)
 	{
@@ -49,7 +49,7 @@ void CraneBody_DownState::Update()
 	bodyParts->SetOpenFlag(!is_moved);
 
 	// 上限下限設定
-	m_accelerator = std::min(std::max(m_accelerator, 0.0f), MAX_ACCE_VAL);
+	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)m_craneComponent->GetMaxAccelerator().y);
 
 	// ポジションに入れる
 	bodyPos.y += m_accelerator;

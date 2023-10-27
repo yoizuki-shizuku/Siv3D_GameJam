@@ -127,6 +127,8 @@
     <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_ReturnState.cpp" />
     <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_StopState.cpp" />
     <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_UPState.cpp" />
+    <ClCompile Include="Scene\PlayScene\Effect\AcquisitionEffect.cpp" />
+    <ClCompile Include="Scene\PlayScene\Field\Field.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
     <ClCompile Include="Scene\RDebugScene\RDebugScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
@@ -344,6 +346,8 @@
     <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_StopState.h" />
     <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_UPState.h" />
     <ClInclude Include="Scene\PlayScene\Crane\State\ICraneState.h" />
+    <ClInclude Include="Scene\PlayScene\Effect\AcquisitionEffect.h" />
+    <ClInclude Include="Scene\PlayScene\Field\Field.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\RDebugScene\RDebugScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />

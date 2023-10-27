@@ -3,9 +3,6 @@
 // 最初のステート
 #include "../State/CraneBody_IdlingState.h"
 
-// 初期位置
-#define FIRST_POS Vec2(700,60)
-
 // 加速度
 #define ACCE_VAL Vec2(0.2f,0.3f)
 
@@ -15,9 +12,12 @@
 // 停止力
 #define BRAKE_VAL Vec2(0.3,1.2f)
 
-CraneBody::CraneBody():
+CraneBody::CraneBody(Vec2 pos):
 	m_openFlag()
 {
+
+	m_firstPos = m_pos = pos;
+
 }
 
 void CraneBody::Initialize(P2World& world)
@@ -25,7 +25,7 @@ void CraneBody::Initialize(P2World& world)
 
 	m_drawTexture = std::make_unique<DrawTexture>();
 	// 使用する画像
-	m_drawTexture->AddTexture(U"Body",U"../Resource/KariCrane.png");
+	m_drawTexture->AddTexture(U"Body",U"../Resources/Textures/KariCrane.png");
 
 	// テクスチャの表示位置
 	constexpr Vec2 BasePos{ 40, 80 };
@@ -42,9 +42,6 @@ void CraneBody::Initialize(P2World& world)
 	// ポリゴンに当たり判定を付ける
 	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
 
-	//　初期位置設定
-	m_pos = FIRST_POS;
-
 	// 子の生成
 	m_craneArm = std::make_unique<CraneArm>();
 
@@ -59,7 +56,7 @@ void CraneBody::Initialize(P2World& world)
 		itr->second->Initialize(world);
 	}
 
-	// ステートを登録する
+	// 初期ステートを登録する
 	m_state = new CraneStateContext(new CraneBody_IdlingState());
 	m_state->SetComponent(this);
 
@@ -94,7 +91,7 @@ void CraneBody::Render()
 		itr->second->Render();
 	}
 
-	m_polygonBody.draw();
+	//m_polygonBody.draw();
 	m_drawTexture->Draw(U"Body");
 
 }
@@ -107,4 +104,19 @@ void CraneBody::Finalize()
 	{
 		itr->second->Finalize();
 	}
+}
+
+Vec2 CraneBody::GetAccelerator()
+{
+	return ACCE_VAL;
+}
+
+Vec2 CraneBody::GetMaxAccelerator()
+{
+	return MAX_ACCE_VAL;
+}
+
+Vec2 CraneBody::GetBrake()
+{
+	return BRAKE_VAL;
 }

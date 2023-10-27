@@ -4,15 +4,6 @@
 
 class ICraneComponent
 {
-public:
-
-	enum CreaneMoveType
-	{
-		MOVE_TO,
-		STOP,
-		MOVE_BACK
-	};
-
 protected:
 
 	ICraneComponent* m_parent = nullptr;
@@ -50,6 +41,13 @@ public:
 	virtual void Render() = 0;
 
 	virtual void Finalize() = 0;
+
+	// 加速度を返す
+	virtual Vec2 GetAccelerator() = 0;
+	// 最大加速度を返す
+	virtual Vec2 GetMaxAccelerator() = 0;
+	// 停止力を返す
+	virtual Vec2 GetBrake() = 0;
 
 	void SetPos(Vec2 pos) { m_pos = pos;}
 	Vec2 GetPos() { return m_pos; }

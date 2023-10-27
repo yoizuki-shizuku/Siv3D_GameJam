@@ -36,7 +36,7 @@ void CraneBody_UpState::Update()
 
 	Vec2 bodyPos = m_craneComponent->GetPos();
 
-	m_accelerator += ACCE_VAL;
+	m_accelerator += m_craneComponent->GetAccelerator().x;
 
 	// 上限に来たら動き終わったフラグを建てる
 	if (bodyPos.y <= MAX_POS_Y)
@@ -45,7 +45,7 @@ void CraneBody_UpState::Update()
 		is_moved = true;
 	}
 	// 上限下限設定
-	m_accelerator = std::min(std::max(m_accelerator, 0.0f), MAX_ACCE_VAL);
+	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)m_craneComponent->GetMaxAccelerator().y);
 
 	// ポジションに入れる
 	bodyPos.y -= m_accelerator;

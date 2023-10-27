@@ -3,21 +3,13 @@
 #include "CraneBody_MoveState.h"
 
 #include "../Parts/ICraneComponent.h"
+#include "../Parts/CraneBody.h"
 
 // 次に移行するステート
 #include "CraneBody_StopState.h"
 
-// 加速度
-#define ACCE_VAL 0.2f
-
-// 最大加速度
-#define MAX_ACCE_VAL 3.5f
-
-// 停止力
-#define BRAKE_VAL 0.8f
-
 // 横移動最低値
-#define MIN_POS_X 500
+#define MIN_POS_X 80
 
 CraneBody_MoveState::CraneBody_MoveState():
 	m_accelerator(),
@@ -32,23 +24,25 @@ CraneBody_MoveState::~CraneBody_MoveState()
 
 void CraneBody_MoveState::Update()
 {
+	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
 	Vec2 bodyPos = m_craneComponent->GetPos();
 
 	if (KeySpace.pressed() && !is_moved)
 	{
-		m_accelerator += ACCE_VAL;
+		m_accelerator += m_craneComponent->GetAccelerator().x;
 
 	}
 	else
 	{
-		m_accelerator -= BRAKE_VAL;
+		m_accelerator -= m_craneComponent->GetBrake().x;
 	}
 
 	// 横移動最低値より超えており、スペースが離された瞬間
-	if (MIN_POS_X >= bodyPos.x && KeySpace.up() && !is_moved) 		is_moved = true;
+	if (bodyParts->GetFirstPos().x + MIN_POS_X >=
+		bodyPos.x && KeySpace.up() && !is_moved) 		is_moved = true;
 
 	// 上限下限設定
-	m_accelerator = std::min(std::max(m_accelerator, 0.0f), MAX_ACCE_VAL);
+	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)m_craneComponent->GetMaxAccelerator().x);
 
 	// ポジションに入れる
 	bodyPos.x -= m_accelerator;
