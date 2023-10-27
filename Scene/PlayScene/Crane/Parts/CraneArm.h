@@ -40,10 +40,19 @@ public:
 	void Render() override;
 	// 初期化処理
 	void Finalize() override;
+
+	// 加速度を返す
+	Vec2 GetAccelerator() override;
+	// 最大加速度を返す
+	Vec2 GetMaxAccelerator() override;
+	// 停止力を返す
+	Vec2 GetBrake() override;
+
 	// 開閉状態を受け取る
 	bool GetOpen();
 	// 閉じている状態か否か
 	bool GetClose();
+
 
 private:
 

@@ -15,18 +15,6 @@
 // 次のステート
 #include "CraneBody_IdlingState.h"
 
-// 初期位置
-#define FIRST_POS Vec2(700,60)
-
-// 加速度
-#define ACCE_VAL 0.2f
-
-// 最大加速度
-#define MAX_ACCE_VAL 3.0f
-
-// 停止力
-#define BRAKE_VAL 0.8f
-
 // ステート間の入れ替えに使用
 #define TRANSITION_TIME 1.0f
 
@@ -43,19 +31,20 @@ CraneBody_ReturnState::~CraneBody_ReturnState()
 void CraneBody_ReturnState::Update()
 {
 	Vec2 bodyPos = m_craneComponent->GetPos();
+	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
 
 	// 初期位置まで移動 (到着時停止力を働かせる)
-	if (bodyPos.x <= FIRST_POS.x)
+	if (bodyPos.x <= bodyParts->GetFirstPos().x)
 	{
-		m_accelerator += ACCE_VAL;
+		m_accelerator += bodyParts->GetAccelerator().x;
 	}
 	else
 	{
-		m_accelerator -= BRAKE_VAL;
+		m_accelerator -= bodyParts->GetBrake().x;
 	}
 
 	// 上限下限設定
-	m_accelerator = std::min(std::max(m_accelerator, 0.0f), MAX_ACCE_VAL);
+	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)bodyParts->GetMaxAccelerator().x);
 
 	// ポジションに入れる
 	bodyPos.x += m_accelerator;

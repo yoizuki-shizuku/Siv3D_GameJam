@@ -40,7 +40,7 @@ public:
 		return m_children.find(name)->second;
 	}
 
-	CraneBody();
+	CraneBody(Vec2 pos);
 
 	// 初期化処理
 	void Initialize(P2World& world) override;
@@ -52,8 +52,18 @@ public:
 	void Finalize() override;
 
 	// アームの開閉を指示する
-	bool GetOpenFlag() { return m_openFlag; }
-	// 状況を変更する
+	bool GetOpenFlag()		{ return m_openFlag; }
+	// 初期位置を返す
+	Vec2 GetFirstPos()		{ return m_firstPos; }
+
+	// 加速度を返す
+	Vec2 GetAccelerator() override;
+	// 最大加速度を返す
+	Vec2 GetMaxAccelerator() override;
+	// 停止力を返す
+	Vec2 GetBrake() override;
+
+	// アーム開閉状況を変更する
 	void SetOpenFlag(bool flag) { m_openFlag = flag; }
 
 private:
@@ -63,4 +73,12 @@ private:
 	// 開閉指示クラス
 	bool m_openFlag;
 
+	// 初期位置
+	Vec2 m_firstPos;
+	//// 加速度
+	//Vec2 m_accelerator;
+	//// 最大加速度
+	//Vec2 m_maxAccelerator;
+	//// 停止力
+	//Vec2 m_brake;
 };

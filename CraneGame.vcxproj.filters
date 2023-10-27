@@ -154,6 +154,21 @@
     <Filter Include="Libraries\Nakamura\DrawTexture">
       <UniqueIdentifier>{c4f8c28a-37e9-4d7a-a661-31927a1930e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene\Crane">
+      <UniqueIdentifier>{7bb9bf74-9313-4d9b-8367-2a54e4f5b2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\Crane\Parts">
+      <UniqueIdentifier>{08051f61-6d93-46f8-9f13-7d06a7b1eb62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\Crane\State">
+      <UniqueIdentifier>{ddf300b5-5f4a-463e-8702-c383c20feb58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\Effect">
+      <UniqueIdentifier>{cbdb2de6-8498-455f-a29c-4e6a09589501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\Field">
+      <UniqueIdentifier>{1139a57d-67f1-4597-9e74-fb4afc5d153f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -179,6 +194,36 @@
     </ClCompile>
     <ClCompile Include="Scene\MyTransition.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\Parts\CraneArm.cpp">
+      <Filter>Scene\PlayScene\Crane\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\Parts\CraneBody.cpp">
+      <Filter>Scene\PlayScene\Crane\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_DownState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_IdlingState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_MoveState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_ReturnState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_StopState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Crane\State\CraneBody_UPState.cpp">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Effect\AcquisitionEffect.cpp">
+      <Filter>Scene\PlayScene\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\Field\Field.cpp">
+      <Filter>Scene\PlayScene\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -835,6 +880,42 @@
     </ClInclude>
     <ClInclude Include="Scene\MyTransition.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\Parts\CraneArm.h">
+      <Filter>Scene\PlayScene\Crane\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\Parts\CraneBody.h">
+      <Filter>Scene\PlayScene\Crane\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\Parts\ICraneComponent.h">
+      <Filter>Scene\PlayScene\Crane\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_DownState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_IdlingState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_MoveState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_ReturnState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_StopState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\CraneBody_UPState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Crane\State\ICraneState.h">
+      <Filter>Scene\PlayScene\Crane\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Effect\AcquisitionEffect.h">
+      <Filter>Scene\PlayScene\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\Field\Field.h">
+      <Filter>Scene\PlayScene\Field</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

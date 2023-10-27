@@ -17,7 +17,7 @@ void CraneArm::Initialize(P2World& world)
 
 	m_drawTexture = std::make_unique<DrawTexture>();
 	// 使用する画像
-	m_drawTexture->AddTexture(U"Arm", U"../Resource/KariArm.png");
+	m_drawTexture->AddTexture(U"Arm", U"../Resources/Textures/KariArm.png");
 
 	//// アルファ値 1 以上の領域を Polygon 化する
 	const Polygon polygon = m_drawTexture->GetImage(U"Arm").alphaToPolygonCentered(1, AllowHoles::No);
@@ -28,7 +28,7 @@ void CraneArm::Initialize(P2World& world)
 	// 単純化した Polygon
 	Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 	// ポリゴンに当たり判定を付ける
-	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
+	m_polygonBody = world.createPolygon(P2Dynamic, Vec2(), simplifiedPolygon);
 }
 
 void CraneArm::Update(P2World& world)
@@ -62,12 +62,27 @@ void CraneArm::Render()
 {
 	// 描画
 	m_drawTexture->Draw(U"Arm");
-	m_polygonBody.drawWireframe();
+	//m_polygonBody.drawWireframe();
 
 }
 
 void CraneArm::Finalize()
 {
+}
+
+Vec2 CraneArm::GetAccelerator()
+{
+	return Vec2();
+}
+
+Vec2 CraneArm::GetMaxAccelerator()
+{
+	return Vec2();
+}
+
+Vec2 CraneArm::GetBrake()
+{
+	return Vec2();
 }
 
 bool CraneArm::GetOpen()
