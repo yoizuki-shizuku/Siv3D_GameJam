@@ -30,20 +30,22 @@ void TitleScene::Initialize()
 
 	// 紐情報を初期化
 	m_bezMiddlePos = { m_logoInfo.POS.x, m_logoInfo.POS.y / 2 };
-	m_logoBez = { Vec2{ m_logoInfo.POS.x , 0 }, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	m_logoBez = { FULCRUM_POS ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
 }
 
 void TitleScene::Update()
 {
 	// 横揺れ処理
 	m_logoInfo.TIMER += s3d::Scene::DeltaTime();
-	m_logoInfo.POS.x += cos(m_logoInfo.TIMER);
-	m_logoInfo.ROTATE += sin(m_logoInfo.TIMER) * 0.001;
+	m_logoInfo.POS.x += cos(m_logoInfo.TIMER) * SWAYING_WIDTH;
+	m_logoInfo.ROTATE += sin(m_logoInfo.TIMER) * LOGO_ROTATION;
+
+	// テクスチャに情報をセット
 	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE,m_logoInfo.ROTATE);
 
 	// 紐の動き
 	m_bezMiddlePos.x = (m_bezMiddlePos.lerp(m_logoInfo.POS, BEZ_SPEED)).x;
-	m_logoBez = { Vec2{ m_logoInfo.POS.x , 0 }, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	m_logoBez = { FULCRUM_POS, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
 
 	// シーン遷移切り替え
 	if (KeyRight.down() || KeyLeft.down())
