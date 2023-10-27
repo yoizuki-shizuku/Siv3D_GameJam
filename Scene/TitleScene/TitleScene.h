@@ -2,6 +2,7 @@
 
 #include "../MyScene.h"
 
+class DrawTexture;
 class TitleScene : public MyClass::Scene
 {
 public:
@@ -15,4 +16,6 @@ public:
 
 private:
 
+	// テクスチャ
+	std::unique_ptr<DrawTexture> m_textures;
 };

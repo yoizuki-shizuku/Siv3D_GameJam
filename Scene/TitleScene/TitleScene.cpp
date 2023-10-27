@@ -1,10 +1,14 @@
 ﻿#include "TitleScene.h"
 
+// テクスチャ情報
+#include "../../Libraries/Nakamura/DrawTexture.hpp"
+
 #include "../PlayScene/PlayScene.h"
 
 TitleScene::TitleScene() :
 	MyClass::Scene()
 {
+	m_textures = std::make_unique<DrawTexture>();
 }
 
 void TitleScene::Initialize()
