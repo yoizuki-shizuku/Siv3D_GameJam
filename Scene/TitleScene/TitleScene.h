@@ -15,7 +15,26 @@ public:
 	void Finalize() override;
 
 private:
+	struct TexInfo
+	{
+		Vec2 POS;
+		double SCALE;
+		double ROTATE;
+		double TIMER;
+	};
 
 	// テクスチャ
 	std::unique_ptr<DrawTexture> m_textures;
+
+	// 選択フラグ
+	bool is_selectFlag;
+
+	// ロゴのテクスチャ情報
+	TexInfo m_logoInfo;
+
+	// 紐の情報
+	Bezier2 m_logoBez;
+	Vec2 m_bezMiddlePos;
+	const int BEZ_WIDTH = 4;
+	const double BEZ_SPEED = 0.01;
 };
