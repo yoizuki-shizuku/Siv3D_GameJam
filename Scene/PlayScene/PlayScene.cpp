@@ -3,6 +3,7 @@
 #include "Crane/Parts/CraneBody.h"
 #include "Effect/AcquisitionEffect.h"
 #include "Field/Field.h"
+#include "Prize/PrizeManager.h"
 
 PlayScene::PlayScene() :
 	MyClass::Scene()
@@ -29,6 +30,9 @@ void PlayScene::Initialize()
 
 	m_effect = std::make_unique<AcquisitionEffect>(Vec2(1000,600));
 
+	m_prizeManager = std::make_unique<PrizeManager>();
+	m_prizeManager->Initialize(*m_p2World.get());
+
 }
 
 void PlayScene::Update()
@@ -41,6 +45,7 @@ void PlayScene::Update()
 		m_p2World->update(StepTime);
 	}
 
+	m_prizeManager->Update();
 	m_craneBody->Update(*m_p2World.get());
 
 }
@@ -49,7 +54,11 @@ void PlayScene::Render()
 {
 
 	m_craneBody->Render();
+	m_prizeManager->Render();
 	m_field->Render();
+
+	m_effect->update(s3d::Scene::FrameCount());
+
 }
 
 void PlayScene::Finalize()

@@ -25,7 +25,7 @@ AcquisitionEffect::AcquisitionEffect(const Vec2& pos) :
 	}
 
 	//	画像のパスは適宜変更
-	m_tex = Texture{ U"../Resources/Texture/Particle.png" };
+	m_tex = Texture{ U"../Resources/Textures/Particle.png" };
 }
 
 bool AcquisitionEffect::update(double t)
@@ -48,7 +48,7 @@ bool AcquisitionEffect::update(double t)
 		col.a = Math::Lerp(0.5, 0.0, t2);
 
 		m_tex(400 * particle.kinds, 0, 400, 400)	//	画像の切り取り範囲を指定(切り取り始点x,切り取り始点y,サイズx,サイズy)
-			.scaled(0.2)							//	大きさ
+			.scaled(0.3)							//	大きさ
 			.rotated(t2 * particle.rotateSpeed)		//	角度
 			.draw(m_pos + particle.velocity * t2 * PARTICLE_SPEED, col);	//	表示位置と色(基準点に方向と経過時間を足して位置を算出)
 	}

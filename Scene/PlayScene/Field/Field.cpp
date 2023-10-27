@@ -29,7 +29,7 @@ void Field::Initialize(P2World world)
 	Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 
 	// ポリゴンに当たり判定を付ける
-	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
+	m_polygonBody = world.createPolygon(P2Kinematic, Vec2(), simplifiedPolygon);
 	m_polygonBody.setPos(Vec2(1280 / 2, 760 / 2));
 }
 

@@ -7,7 +7,7 @@
 #define ACCE_VAL Vec2(0.2f,0.3f)
 
 // 最大加速度
-#define MAX_ACCE_VAL Vec2(3.0f,2.0f)
+#define MAX_ACCE_VAL Vec2(8.0f,6.0f)
 
 // 停止力
 #define BRAKE_VAL Vec2(0.3,1.2f)
@@ -40,7 +40,7 @@ void CraneBody::Initialize(P2World& world)
 	Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 
 	// ポリゴンに当たり判定を付ける
-	m_polygonBody = world.createPolygon(P2Static, Vec2(), simplifiedPolygon);
+	m_polygonBody = world.createPolygon(P2Dynamic, Vec2(), simplifiedPolygon);
 
 	// 子の生成
 	m_craneArm = std::make_unique<CraneArm>();

@@ -5,6 +5,7 @@
 class CraneBody;
 class AcquisitionEffect;
 class Field;
+class PrizeManager;
 
 class PlayScene : public MyClass::Scene
 {
@@ -27,6 +28,8 @@ private:
 
 	// 足場（仮）
 	std::unique_ptr<Field>				m_field;
+
+	std::unique_ptr<PrizeManager>		m_prizeManager;
 
 	// 2D 物理演算のシミュレーション蓄積時間（秒）
 	double m_accumulatedTime = 0.0;
