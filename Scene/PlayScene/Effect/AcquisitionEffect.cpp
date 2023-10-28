@@ -4,8 +4,8 @@
 #define PARTICLE_SPEED	(500.0)	//	パーティクルの移動速度
 
 //	コンストラクタの引数にパーティクルの生成位置を入れる
-AcquisitionEffect::AcquisitionEffect(const Vec2& pos, const double life, const char32_t* path, const Rect& rect) :
-	m_pos(pos), m_lifeTime(life)
+AcquisitionEffect::AcquisitionEffect(const Vec2& pos, const double life, const char32_t* path, const int& cutNum) :
+	m_pos(pos), m_lifeTime(life),m_cutNum(cutNum)
 {
 	for (int i = 0; i < PARTICLE_NUM; i++)
 	{
@@ -13,7 +13,7 @@ AcquisitionEffect::AcquisitionEffect(const Vec2& pos, const double life, const c
 		double rad = Random(Math::ToRadians(-20), Math::ToRadians(20));
 
 		Shape shape{
-			.kinds = Random(0, 4),	//	画像の切り取り位置
+			.kinds = Random(0, m_cutNum - 1),	//	画像の切り取り位置
 			.velocity = Vec2(cos(-Math::HalfPi + rad),sin(-Math::HalfPi + rad)),	//	移動方向
 			.startTime = Random(-1.0, 0.0),		//	-方向の値が大きくなるほど遅く生成
 			.color = RandomColorF(),
@@ -25,6 +25,7 @@ AcquisitionEffect::AcquisitionEffect(const Vec2& pos, const double life, const c
 	}
 
 	m_tex = Texture(path);
+
 }
 
 bool AcquisitionEffect::update(double t)
@@ -46,7 +47,7 @@ bool AcquisitionEffect::update(double t)
 		ColorF col = particle.color;
 		col.a = Math::Lerp(0.5, 0.0, t2);
 
-		m_tex(400 * particle.kinds, 0, 400, 400)	//	画像の切り取り範囲を指定(切り取り始点x,切り取り始点y,サイズx,サイズy)
+		m_tex((m_tex.width() / m_cutNum) * particle.kinds, 0, (double)m_tex.width() / m_cutNum, (double)m_tex.height())	//	画像の切り取り範囲を指定(切り取り始点x,切り取り始点y,サイズx,サイズy)
 			.scaled(0.3)							//	大きさ
 			.rotated(t2 * particle.rotateSpeed)		//	角度
 			.draw(m_pos + particle.velocity * t2 * PARTICLE_SPEED, col);	//	表示位置と色(基準点に方向と経過時間を足して位置を算出)
