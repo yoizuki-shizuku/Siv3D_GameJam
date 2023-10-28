@@ -14,7 +14,13 @@ public:
 		double rotateSpeed;	//	回転速度
 	};
 
-	AcquisitionEffect(const Vec2& pos);
+
+	/// <param name="pos">発生位置</param>
+	/// <param name="life">生存時間</param>
+	/// <param name="path">画像パス</param>
+	/// <param name="rect">切り取り範囲</param>
+	AcquisitionEffect(const Vec2& pos, const double life = 2.0, const char32_t* path = U"../Resources/Textures/Particle.png",
+		const Rect& rect);
 
 	//	IEffectのupdateをオーバーライド
 	bool update(double t) override;
@@ -23,6 +29,7 @@ private:
 	Array<Shape> m_particles;	//	パーティクルを制御
 	Vec2 m_pos;					//	パーティクルの発生位置
 	Texture m_tex;				//	画像
+	double m_lifeTime;			//  生存時間
 };
 
 //	使用方法
