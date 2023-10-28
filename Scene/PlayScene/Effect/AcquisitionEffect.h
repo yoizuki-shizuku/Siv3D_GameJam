@@ -20,7 +20,7 @@ public:
 	/// <param name="path">画像パス</param>
 	/// <param name="rect">切り取り範囲</param>
 	AcquisitionEffect(const Vec2& pos, const double life = 2.0, const char32_t* path = U"../Resources/Textures/Particle.png",
-		const Rect& rect);
+		const int& cutNum = 5);
 
 	//	IEffectのupdateをオーバーライド
 	bool update(double t) override;
@@ -30,6 +30,7 @@ private:
 	Vec2 m_pos;					//	パーティクルの発生位置
 	Texture m_tex;				//	画像
 	double m_lifeTime;			//  生存時間
+	int m_cutNum;				//　画像切り取り枚数
 };
 
 //	使用方法
