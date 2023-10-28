@@ -53,8 +53,8 @@ private:
 
 	// 紐の情報
 	Bezier2 m_bez;
+	Vec2 m_bezStartPos;
 	Vec2 m_bezMiddlePos;
-	const Vec2 FULCRUM_POS = { 1280 / 2, 0 };
 	const int BEZ_WIDTH = 4;
 	const double BEZ_SPEED = 0.0005;
 };

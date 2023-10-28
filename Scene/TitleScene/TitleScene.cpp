@@ -31,15 +31,17 @@ void TitleScene::Initialize()
 	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE);
 
 	m_textures->AddTexture(U"Start", U"../Resources/Textures/Title_Start.png");
-	m_textures->SetTexInfo(U"Start", Vec2{800,600}, m_startRate);
+	m_textures->SetTexInfo(U"Start", Vec2{ 900,650 }, m_startRate);
 
 	m_textures->AddTexture(U"Exit", U"../Resources/Textures/Title_Exit.png");
-	m_textures->SetTexInfo(U"Exit", Vec2{1000,600}, m_exitRate);
+	m_textures->SetTexInfo(U"Exit", Vec2{ 1100,650 }, m_exitRate);
 
 
 	// 紐情報を初期化
+	m_bezStartPos = { 1280 / 2, 0 };
 	m_bezMiddlePos = { m_logoInfo.POS.x, m_logoInfo.POS.y / 2 };
-	m_bez = { FULCRUM_POS ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	m_bez = { m_bezStartPos ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+
 }
 
 void TitleScene::Update()
@@ -94,8 +96,9 @@ void TitleScene::UpdateLogo()
 void TitleScene::UpdateBez()
 {
 	// ロゴを吊るした挙動
+	m_bezStartPos.x += cos(m_logoInfo.TIMER) * 1.5;
 	m_bezMiddlePos.x = (m_bezMiddlePos.lerp(m_logoInfo.POS, BEZ_SPEED)).x;
-	m_bez = { FULCRUM_POS, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	m_bez = { m_bezStartPos, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
 }
 
 void TitleScene::UpdateFonts()

@@ -4,8 +4,8 @@
 #define PARTICLE_SPEED	(500.0)	//	パーティクルの移動速度
 
 //	コンストラクタの引数にパーティクルの生成位置を入れる
-AcquisitionEffect::AcquisitionEffect(const Vec2& pos) :
-	m_pos(pos)
+AcquisitionEffect::AcquisitionEffect(const Vec2& pos, const double life, const char32_t* path, const Rect& rect) :
+	m_pos(pos), m_lifeTime(life)
 {
 	for (int i = 0; i < PARTICLE_NUM; i++)
 	{
@@ -24,8 +24,7 @@ AcquisitionEffect::AcquisitionEffect(const Vec2& pos) :
 		m_particles << shape;
 	}
 
-	//	画像のパスは適宜変更
-	m_tex = Texture{ U"../Resources/Textures/Particle.png" };
+	m_tex = Texture(path);
 }
 
 bool AcquisitionEffect::update(double t)
@@ -55,5 +54,5 @@ bool AcquisitionEffect::update(double t)
 
 	//	falseが返るとエフェクトは自動で削除される
 	//	生存時間はここで指定
-	return (t < 2.0);
+	return (t < m_lifeTime);
 }
