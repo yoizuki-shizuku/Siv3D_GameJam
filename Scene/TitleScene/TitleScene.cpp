@@ -9,7 +9,9 @@ TitleScene::TitleScene()
 	: MyClass::Scene()
 	, is_selectFlag{ false }		// 選択フラグ（TrueでStart）
 	, m_logoInfo{}					// ロゴの情報
-	, m_logoBez{}					// 紐を再現
+	, m_bez{}						// 紐を再現
+	, m_startRate{1.0}				// スタートの拡大率
+	, m_exitRate{1.0}				// イグジットの拡大率
 {
 }
 
@@ -28,30 +30,29 @@ void TitleScene::Initialize()
 	m_textures->AddTexture(U"Logo", U"../Resources/Textures/Logo.png");
 	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE);
 
+	m_textures->AddTexture(U"Start", U"../Resources/Textures/Title_Start.png");
+	m_textures->SetTexInfo(U"Start", Vec2{800,600}, m_startRate);
+
+	m_textures->AddTexture(U"Exit", U"../Resources/Textures/Title_Exit.png");
+	m_textures->SetTexInfo(U"Exit", Vec2{1000,600}, m_exitRate);
+
+
 	// 紐情報を初期化
 	m_bezMiddlePos = { m_logoInfo.POS.x, m_logoInfo.POS.y / 2 };
-	m_logoBez = { FULCRUM_POS ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	m_bez = { FULCRUM_POS ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
 }
 
 void TitleScene::Update()
 {
-	// 横揺れ処理
-	m_logoInfo.TIMER += s3d::Scene::DeltaTime();
-	m_logoInfo.POS.x += cos(m_logoInfo.TIMER) * SWAYING_WIDTH;
-	m_logoInfo.ROTATE += sin(m_logoInfo.TIMER) * LOGO_ROTATION;
+	// ロゴの更新
+	UpdateLogo();
 
-	// テクスチャに情報をセット
-	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE,m_logoInfo.ROTATE);
+	// 紐の更新
+	UpdateBez();
 
-	// 紐の動き
-	m_bezMiddlePos.x = (m_bezMiddlePos.lerp(m_logoInfo.POS, BEZ_SPEED)).x;
-	m_logoBez = { FULCRUM_POS, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+	// フォントの更新
+	UpdateFonts();
 
-	// シーン遷移切り替え
-	if (KeyRight.down() || KeyLeft.down())
-	{
-		is_selectFlag = !is_selectFlag;
-	}
 	if (KeySpace.down())
 	{
 		is_selectFlag ? ChangeScene<PlayScene>() : ExitGame();
@@ -65,12 +66,62 @@ void TitleScene::Render()
 	is_selectFlag ? Print << U"Play" : Print << U"Exit";
 
 	// 紐の描画
-	m_logoBez.draw(BEZ_WIDTH, Palette::Orangered);
+	m_bez.draw(BEZ_WIDTH, Palette::Orangered);
 
 	// タイトルロゴの描画
 	m_textures->Draw(U"Logo");
+
+	// スタートイグジットの描画
+	m_textures->Draw(U"Start");
+	m_textures->Draw(U"Exit");
 }
 
 void TitleScene::Finalize()
 {
+}
+
+void TitleScene::UpdateLogo()
+{
+	// 横揺れ処理
+	m_logoInfo.TIMER += s3d::Scene::DeltaTime();
+	m_logoInfo.POS.x += cos(m_logoInfo.TIMER) * SWAYING_WIDTH;
+	m_logoInfo.ROTATE += sin(m_logoInfo.TIMER) * LOGO_ROTATION;
+
+	// テクスチャに情報をセット
+	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE, m_logoInfo.ROTATE);
+}
+
+void TitleScene::UpdateBez()
+{
+	// ロゴを吊るした挙動
+	m_bezMiddlePos.x = (m_bezMiddlePos.lerp(m_logoInfo.POS, BEZ_SPEED)).x;
+	m_bez = { FULCRUM_POS, m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
+}
+
+void TitleScene::UpdateFonts()
+{
+	// シーン遷移切り替え
+	if (KeyRight.down() || KeyLeft.down())
+	{
+		is_selectFlag = !is_selectFlag;
+	}
+
+	// ラープ
+	auto lerp = [](double a, double b, double t) {return a + t * (b - a); };
+
+	// スタートを拡大
+	if (is_selectFlag)
+	{
+		m_startRate = lerp(m_startRate, SELECT_RATE,  0.5);
+		m_exitRate  = lerp(m_exitRate,  DEFAULT_RATE, 0.5);
+	}
+	else
+	{
+		m_startRate = lerp(m_startRate, DEFAULT_RATE, 0.5);
+		m_exitRate  = lerp(m_exitRate,  SELECT_RATE,  0.5);
+	}
+
+	// 拡大率をセット
+	m_textures->SetTexInfo(U"Start", m_textures->GetTexInfo(U"Start").POS, m_startRate);
+	m_textures->SetTexInfo(U"Exit", m_textures->GetTexInfo(U"Exit").POS, m_exitRate);
 }
