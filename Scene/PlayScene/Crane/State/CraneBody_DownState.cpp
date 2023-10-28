@@ -16,7 +16,7 @@
 #include "CraneBody_UpState.h"
 
 // 最大下降値
-#define MAX_DOWN 450.0f
+#define MAX_DOWN 400.0f
 
 // 加速度
 #define ACCE_VAL 0.3f
