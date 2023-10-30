@@ -18,7 +18,7 @@ public:
 	/// <param name="pos">発生位置</param>
 	/// <param name="life">生存時間</param>
 	/// <param name="path">画像パス</param>
-	/// <param name="rect">切り取り範囲</param>
+	/// <param name="cutNum">切り取り枚数</param>
 	AcquisitionEffect(const Vec2& pos, const double life = 2.0, const char32_t* path = U"../Resources/Textures/Particle.png",
 		const int& cutNum = 5);
 

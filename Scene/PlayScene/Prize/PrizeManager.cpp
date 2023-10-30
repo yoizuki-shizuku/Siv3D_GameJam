@@ -17,7 +17,7 @@ PrizeManager::~PrizeManager()
 void PrizeManager::Initialize(P2World world)
 {
 
-	m_effect = std::make_unique<AcquisitionEffect>(Vec2(1050, 730));
+	//m_effect = std::make_unique<AcquisitionEffect>(Vec2(1050, 730));
 
 	SmallPrizeFactory* smallPrizeFac = new SmallPrizeFactory();
 
@@ -51,8 +51,7 @@ void PrizeManager::Initialize(P2World world)
 
 void PrizeManager::Update()
 {
-	m_time += s3d::Scene::DeltaTime();
-	m_effect->update(m_time);
+	m_effect.update();
 
 	for (auto& prizes : m_prizes)
 	{
@@ -67,7 +66,7 @@ void PrizeManager::Update()
 		{
 			prizes->SetPos(Vec2(100, 0));
 
-			m_time = 0.0;
+			m_effect.add<AcquisitionEffect>(Vec2(1050, 730));
 
 		}
 

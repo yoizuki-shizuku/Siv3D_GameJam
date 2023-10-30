@@ -21,7 +21,7 @@ private:
 	Array<IPrizeProduct*> m_prizes;
 
 	// エフェクトクラス
-	std::unique_ptr<AcquisitionEffect>	m_effect;
+	Effect	m_effect;
 
 	double m_time;
 
