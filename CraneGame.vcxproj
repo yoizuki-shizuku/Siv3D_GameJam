@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Libraries\Nakamura\DrawTexture.cpp" />
+    <ClCompile Include="Libraries\Yamamoto\Gaming.cpp" />
     <ClCompile Include="Libraries\Yamamoto\Numeral.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Scene\MySceneManager.cpp" />
@@ -338,6 +339,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\Nakamura\DrawTexture.hpp" />
+    <ClInclude Include="Libraries\Yamamoto\Gaming.h" />
     <ClInclude Include="Libraries\Yamamoto\Numeral.h" />
     <ClInclude Include="Scene\Easing.h" />
     <ClInclude Include="Scene\MyScene.h" />

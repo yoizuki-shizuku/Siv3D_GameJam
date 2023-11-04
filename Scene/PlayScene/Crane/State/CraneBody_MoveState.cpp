@@ -30,12 +30,12 @@ void CraneBody_MoveState::Update()
 	if (KeySpace.pressed() && !is_moved)
 	{
 
-		m_accelerator += m_craneComponent->GetAccelerator().x;
+		m_accelerator += (float)m_craneComponent->GetAccelerator().x;
 
 	}
 	else
 	{
-		m_accelerator -= m_craneComponent->GetBrake().x;
+		m_accelerator -= (float)m_craneComponent->GetBrake().x;
 
 	}
 

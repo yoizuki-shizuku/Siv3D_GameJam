@@ -16,7 +16,7 @@
 #include "CraneBody_UpState.h"
 
 // 最大下降値
-#define MAX_DOWN 400.0f
+#define MAX_DOWN 470.0f
 
 // 加速度
 #define ACCE_VAL 0.3f
@@ -36,6 +36,9 @@ void CraneBody_DownState::Update()
 {
 	Vec2 bodyPos = m_craneComponent->GetPos();
 
+	// 閉じるように指示する
+	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
+
 	if (!is_moved)
 	{
 		m_accelerator += (float)m_craneComponent->GetAccelerator().x;
@@ -47,8 +50,6 @@ void CraneBody_DownState::Update()
 		is_moved = true;
 	}
 
-	// 閉じるように指示する
-	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
 	bodyParts->SetOpenFlag(!is_moved);
 
 	// 上限下限設定

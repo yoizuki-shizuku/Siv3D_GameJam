@@ -7,6 +7,7 @@ class AcquisitionEffect;
 class Field;
 class PrizeManager;
 class Numeral;
+class Gaming;
 
 class PlayScene : public MyClass::Scene
 {
@@ -33,6 +34,12 @@ private:
 	std::unique_ptr<PrizeManager>		m_prizeManager;
 
 	std::unique_ptr<Numeral>			m_numeral;
+
+	std::unique_ptr<Numeral>			m_craneCount;
+
+	std::unique_ptr<Gaming>				m_tex;
+
+	std::unique_ptr<Texture>			m_backTex;
 
 	// 2D 物理演算のシミュレーション蓄積時間（秒）
 	double m_accumulatedTime = 0.0;
