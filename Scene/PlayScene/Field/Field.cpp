@@ -41,7 +41,6 @@ void Field::Render()
 {
 
 	m_drawTexture->Draw(U"Field");
-	m_polygonBody.drawWireframe();
 }
 
 

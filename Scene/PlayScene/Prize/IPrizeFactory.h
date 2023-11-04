@@ -8,9 +8,12 @@ public:
 	virtual void Operation() const = 0;
 	virtual void Update() = 0;
 	virtual void Render() = 0;
+	virtual int GetScore() = 0;
 
 	void SetPos(Vec2 pos) { m_polygonBody.setPos(pos); }
 	Vec2 GetPos()		  { return m_polygonBody.getPos();}
+	P2Body GetP2Body()	  { return m_polygonBody;}
+
 
 protected:
 
