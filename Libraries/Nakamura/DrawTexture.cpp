@@ -15,7 +15,7 @@
 /// <param name="引数無し"></param>
 /// <returns>なし</returns>
 DrawTexture::DrawTexture()
-	: m_textures{}						// テクスチャ配列
+	: m_tex{}						// テクスチャ配列
 	, m_images{}						// イメージ配列
 	, m_infos{}							// 画像の設定
 {
@@ -28,7 +28,7 @@ DrawTexture::DrawTexture()
 /// <returns>なし</returns>
 DrawTexture::~DrawTexture()
 {
-	m_textures.clear();
+	m_tex.clear();
 	m_images.clear();
 	m_infos.clear();
 }
@@ -42,7 +42,7 @@ DrawTexture::~DrawTexture()
 void DrawTexture::AddTexture(const char32_t* key, const char32_t* path)
 {
 	Texture _tex{ path };
-	m_textures.emplace(key, _tex);
+	m_tex.emplace(key, _tex);
 
 	Image _img{ path };
 	m_images.emplace(key, _img);
@@ -60,12 +60,12 @@ void DrawTexture::AddTexture(const char32_t* key, const char32_t* path)
 void DrawTexture::Draw(const char32_t* key, const bool& rotateAt)
 {
 	// イテレータを取得
-	std::map<const char32_t*, Texture>::const_iterator _it = m_textures.find(key);
+	std::map<const char32_t*, Texture>::const_iterator _it = m_tex.find(key);
 	std::map<const char32_t*, TexInfo>::iterator _in = m_infos.find(key);
 	try
 	{
 		// テクスチャが見つかれば処理をする
-		if (_it != m_textures.end())
+		if (_it != m_tex.end())
 		{
 			if (rotateAt)
 			{
@@ -73,7 +73,7 @@ void DrawTexture::Draw(const char32_t* key, const bool& rotateAt)
 					flipped(_in->second.FLIPPED).					// 上下の向き
 					scaled(_in->second.SCALE).						// 拡大率
 					rotatedAt(_in->second.POS, _in->second.ROTATE). // 回転率(00軸)
-					drawAt(_in->second.POS, Palette::White);		// 座標指定して描画
+					drawAt(_in->second.POS, _in->second.COLOR);		// 座標指定して描画
 			}
 			else
 			{
@@ -81,7 +81,7 @@ void DrawTexture::Draw(const char32_t* key, const bool& rotateAt)
 					flipped(_in->second.FLIPPED).					// 上下の向き
 					scaled(_in->second.SCALE).						// 拡大率
 					rotated(_in->second.ROTATE).					// 回転率(POS軸)
-					drawAt(_in->second.POS, Palette::White);		// 座標指定して描画
+					drawAt(_in->second.POS, _in->second.COLOR);		// 座標指定して描画
 			}
 		}
 		else
@@ -164,9 +164,10 @@ const DrawTexture::TexInfo& DrawTexture::GetTexInfo(const char32_t* key)
 /// <param name="rotate">回転率(デフォルトは0.0)</param>
 /// <param name="mirrored">左右反転フラグ(デフォルトはfalse)</param>
 /// <param name="flipped">上下反転フラグ(デフォルトはfalse)</param>
+/// <param name="color">色を指定(デフォルトはColorF::White)</param>
 /// <returns>なし</returns>
 void DrawTexture::SetTexInfo(const char32_t* key, const Vec2& pos, const double& scale, const double& rotate,
-	const bool& mirrored, const bool& flipped)
+	const bool& mirrored, const bool& flipped, const ColorF& color)
 {
 	std::map<const char32_t*, TexInfo>::iterator _it = m_infos.find(key);
 
@@ -176,6 +177,7 @@ void DrawTexture::SetTexInfo(const char32_t* key, const Vec2& pos, const double&
 	_texInfo.ROTATE = rotate;
 	_texInfo.MIRRORED = mirrored;
 	_texInfo.FLIPPED = flipped;
+	_texInfo.COLOR = color;
 
 	_it->second = _texInfo;
 }
