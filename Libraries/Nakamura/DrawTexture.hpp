@@ -17,27 +17,30 @@ public:
 		double ROTATE;
 		bool MIRRORED;
 		bool FLIPPED;
+		ColorF COLOR;
 		TexInfo()
 		{
 			POS = Vec2{0,0};
 			SCALE = 1.0;
 			ROTATE = 0.0;
 			MIRRORED = FLIPPED = false;
+			COLOR = Palette::White;
 		}
-		void set(const Vec2& pos, const double& scale, const double& rotate, const bool& mirrored, const bool& flipped)
+		void set(const Vec2& pos, const double& scale, const double& rotate, const bool& mirrored, const bool& flipped,const ColorF& color)
 		{
 			POS = pos;
 			SCALE = scale;
 			ROTATE = rotate;
 			MIRRORED = mirrored;
 			FLIPPED = flipped;
+			COLOR = color;
 		}
 	};
 
 private:
 
 	// テクスチャの配列 // キー・テクスチャパス
-	std::map<const char32_t*, Texture> m_textures;
+	std::map<const char32_t*, Texture> m_tex;
 	std::map<const char32_t*, Image> m_images;
 	std::map<const char32_t*, TexInfo> m_infos;
 
@@ -99,7 +102,8 @@ public:
 	/// <param name="rotate">回転率(デフォルトは0.0)</param>
 	/// <param name="mirrored">左右反転フラグ(デフォルトはfalse)</param>
 	/// <param name="flipped">上下反転フラグ(デフォルトはfalse)</param>
+	/// <param name="color">色を指定(デフォルトはColorF::White)</param>
 	/// <returns>なし</returns>
 	void SetTexInfo(const char32_t* key,const Vec2& pos, const double& scale = 1.0, const double& rotate = 0.0,
-		const bool& mirrored = false, const bool& flipped = false);
+		const bool& mirrored = false, const bool& flipped = false, const ColorF& color = Palette::White);
 };

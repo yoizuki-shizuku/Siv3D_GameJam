@@ -25,6 +25,9 @@ private:
 	// StartExitの更新
 	void UpdateFonts();
 
+	// 背景色をゲーミング風に更新
+	void UpdateGaming();
+
 private:
 	struct TexInfo
 	{
@@ -35,7 +38,7 @@ private:
 	};
 
 	// テクスチャ
-	std::unique_ptr<DrawTexture> m_textures;
+	std::unique_ptr<DrawTexture> m_tex;
 
 	// 選択フラグ
 	bool is_selectFlag;

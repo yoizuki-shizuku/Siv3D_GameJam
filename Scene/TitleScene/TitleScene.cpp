@@ -23,18 +23,21 @@ void TitleScene::Initialize()
 	is_selectFlag = true;
 
 	// テクスチャクラスを作成
-	m_textures = std::make_unique<DrawTexture>();
+	m_tex = std::make_unique<DrawTexture>();
 
 	// 画像を追加
 	m_logoInfo = TexInfo({ 1280 / 2, 720 / 2 - 100 }, 1.5, 0.0, 0.0);
-	m_textures->AddTexture(U"Logo", U"../Resources/Textures/Logo.png");
-	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE);
+	m_tex->AddTexture(U"Logo", U"../Resources/Textures/Logo.png");
+	m_tex->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE);
 
-	m_textures->AddTexture(U"Start", U"../Resources/Textures/Title_Start.png");
-	m_textures->SetTexInfo(U"Start", Vec2{ 900,650 }, m_startRate);
+	m_tex->AddTexture(U"Play", U"../Resources/Textures/Title_Start.png");
+	m_tex->SetTexInfo(U"Play", Vec2{ 900,650 }, m_startRate);
 
-	m_textures->AddTexture(U"Exit", U"../Resources/Textures/Title_Exit.png");
-	m_textures->SetTexInfo(U"Exit", Vec2{ 1100,650 }, m_exitRate);
+	m_tex->AddTexture(U"Exit", U"../Resources/Textures/Title_Exit.png");
+	m_tex->SetTexInfo(U"Exit", Vec2{ 1100,650 }, m_exitRate);
+
+	m_tex->AddTexture(U"Back", U"../Resources/Textures/TitleBack.png");
+	m_tex->SetTexInfo(U"Back", Vec2{ 1280 / 2, 720 / 2 },1.0);
 
 
 	// 紐情報を初期化
@@ -55,6 +58,9 @@ void TitleScene::Update()
 	// フォントの更新
 	UpdateFonts();
 
+	// ゲーミング背景の更新
+	UpdateGaming();
+
 	if (KeySpace.down())
 	{
 		is_selectFlag ? ChangeScene<PlayScene>() : ExitGame();
@@ -68,14 +74,17 @@ void TitleScene::Render()
 	is_selectFlag ? Print << U"Play" : Print << U"Exit";
 
 	// 紐の描画
-	m_bez.draw(BEZ_WIDTH, Palette::Orangered);
+	m_bez.draw(BEZ_WIDTH, HSV(360.0 - (s3d::Scene::Time() * 60.0),0.5,0.8));
+
+	// 背景の描画
+	m_tex->Draw(U"Back");
 
 	// タイトルロゴの描画
-	m_textures->Draw(U"Logo");
+	m_tex->Draw(U"Logo");
 
 	// スタートイグジットの描画
-	m_textures->Draw(U"Start");
-	m_textures->Draw(U"Exit");
+	m_tex->Draw(U"Play");
+	m_tex->Draw(U"Exit");
 }
 
 void TitleScene::Finalize()
@@ -90,7 +99,7 @@ void TitleScene::UpdateLogo()
 	m_logoInfo.ROTATE += sin(m_logoInfo.TIMER) * LOGO_ROTATION;
 
 	// テクスチャに情報をセット
-	m_textures->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE, m_logoInfo.ROTATE);
+	m_tex->SetTexInfo(U"Logo", m_logoInfo.POS, m_logoInfo.SCALE, m_logoInfo.ROTATE);
 }
 
 void TitleScene::UpdateBez()
@@ -125,6 +134,15 @@ void TitleScene::UpdateFonts()
 	}
 
 	// 拡大率をセット
-	m_textures->SetTexInfo(U"Start", m_textures->GetTexInfo(U"Start").POS, m_startRate);
-	m_textures->SetTexInfo(U"Exit", m_textures->GetTexInfo(U"Exit").POS, m_exitRate);
+	m_tex->SetTexInfo(U"Play", m_tex->GetTexInfo(U"Play").POS, m_startRate);
+	m_tex->SetTexInfo(U"Exit", m_tex->GetTexInfo(U"Exit").POS, m_exitRate);
+}
+
+void TitleScene::UpdateGaming()
+{
+	const double hue = (s3d::Scene::Time() * 60.0);
+
+	m_tex->SetTexInfo(U"Back", m_tex->GetTexInfo(U"Back").POS, m_tex->GetTexInfo(U"Back").SCALE,
+		m_tex->GetTexInfo(U"Back").ROTATE, m_tex->GetTexInfo(U"Back").MIRRORED, m_tex->GetTexInfo(U"Back").FLIPPED,
+		HSV{ hue ,0.5,1.0 });
 }
