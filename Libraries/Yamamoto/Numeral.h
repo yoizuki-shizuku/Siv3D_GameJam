@@ -24,7 +24,7 @@ private:
 	Texture m_texture;
 
 	int m_number;
-	int m_digit;
+	size_t m_digit;
 	float m_space;
 	s3d::Vec2 m_position;
 };
