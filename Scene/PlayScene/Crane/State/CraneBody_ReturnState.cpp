@@ -36,7 +36,7 @@ void CraneBody_ReturnState::Update()
 	// 初期位置まで移動 (到着時停止力を働かせる)
 	if (bodyPos.x <= bodyParts->GetFirstPos().x - 80)
 	{
-		m_accelerator += bodyParts->GetAccelerator().x;
+		m_accelerator += bodyParts->GetAccelerator().x * 0.4;
 	}
 	else
 	{
@@ -44,7 +44,7 @@ void CraneBody_ReturnState::Update()
 	}
 
 	// 上限下限設定
-	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)bodyParts->GetMaxAccelerator().x);
+	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)bodyParts->GetMaxAccelerator().x * 0.7f);
 
 	// ポジションに入れる
 	bodyPos.x += m_accelerator;

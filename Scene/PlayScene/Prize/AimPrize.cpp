@@ -4,9 +4,9 @@
 AimPrizeProduct::AimPrizeProduct(P2World world)
 {
 
-	Rect::value_type scale = 30;
+	Rect::value_type scale = 20;
 
-	m_polygonBody = world.createQuad(P2Dynamic, Vec2(), Quad(Rect(scale, scale, scale, scale)));
+	m_polygonBody = world.createQuad(P2Dynamic, Vec2(), Quad(Rect(-10, -10, 20, 20)));
 	m_polygonBody.setGravityScale(m_weight);
 
 }
@@ -21,7 +21,4 @@ void AimPrizeProduct::Update()
 
 void AimPrizeProduct::Render()
 {
-
-	m_polygonBody.draw(Palette::Royalblue);
-
 }

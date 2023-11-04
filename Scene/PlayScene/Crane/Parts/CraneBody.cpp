@@ -40,7 +40,7 @@ void CraneBody::Initialize(P2World& world)
 	Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 
 	// ポリゴンに当たり判定を付ける
-	m_polygonBody = world.createPolygon(P2Dynamic, Vec2(), simplifiedPolygon);
+	//m_polygonBody = world.createPolygon(P2Dynamic, Vec2(), simplifiedPolygon);
 
 	// 子の生成
 	m_craneArm = std::make_unique<CraneArm>();
@@ -79,7 +79,7 @@ void CraneBody::Update(P2World& world)
 		itr->second->Update(world);
 	}
 
-	m_polygonBody.setPos(m_pos);
+	//m_polygonBody.setPos(m_pos);
 
 }
 
@@ -90,8 +90,6 @@ void CraneBody::Render()
 	{
 		itr->second->Render();
 	}
-
-	//m_polygonBody.draw();
 	m_drawTexture->Draw(U"Body");
 
 }

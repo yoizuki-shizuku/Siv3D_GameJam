@@ -3,6 +3,7 @@
 class IPrizeProduct;
 class AcquisitionEffect;
 class IPrizeFactory;
+class DrawTexture;
 
 class PrizeManager
 {
@@ -23,13 +24,16 @@ public:
 	/// @param prize 景品の種類
 	/// @param world 物理空間
 	/// @param num 総数
-	void CreatePrize(IPrizeFactory* prize, P2World world, int num);
+	void CreatePrize(IPrizeFactory* prize, P2World world, int num,int pulsPosY = 0);
 
 
 private:
 
 	// プライズリスト
 	Array<IPrizeProduct*> m_prizes;
+
+	// テクスチャクラス
+	std::unique_ptr<DrawTexture> m_drawTexture;
 
 	// エフェクトクラス
 	Effect	m_effect;
