@@ -13,7 +13,7 @@ void Numeral::Render()
 {
 	int forCalc = m_number;
 
-	for (int i = 0; i < m_digit; i++)
+	for (size_t i = 0; i < m_digit; i++)
 	{
 		int num = forCalc % 10;
 		m_texture(m_texture.width() / 10 * num, 0, m_texture.width() / 10, m_texture.height()).
@@ -25,7 +25,8 @@ void Numeral::Render()
 void Numeral::SetNumber(int num)
 {
 	m_number = num;
-	m_digit = static_cast<int>(log10(m_number) + 1);
+	//m_digit = static_cast<int>(log10(m_number) + 1);
+	m_digit = std::to_string(num).length();
 }
 
 void Numeral::LoadTexture(const s3d::FilePath path)
