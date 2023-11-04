@@ -36,7 +36,7 @@ void PlayScene::Initialize()
 
 	m_numeral = std::make_unique<Numeral>();
 	m_numeral->LoadTexture(U"../Resources/Textures/number.png");
-	m_numeral->SetPosition(Vec2(1100, 70));
+	m_numeral->SetPosition(Vec2(800, 600));
 	m_numeral->SetSpace(5.0f);
 
 	m_prizeManager = std::make_unique<PrizeManager>();
@@ -53,6 +53,8 @@ void PlayScene::Update()
 		// 2D 物理演算のワールドを更新する
 		m_p2World->update(StepTime);
 	}
+
+	m_p2World->setSleepEnabled(false);
 
 	m_prizeManager->Update();
 	m_craneBody->Update(*m_p2World.get());

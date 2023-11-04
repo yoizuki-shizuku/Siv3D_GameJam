@@ -9,11 +9,11 @@ public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 	virtual int GetScore() = 0;
+	virtual const char32_t* GetName() = 0;
 
 	void SetPos(Vec2 pos) { m_polygonBody.setPos(pos); }
 	Vec2 GetPos()		  { return m_polygonBody.getPos();}
 	P2Body GetP2Body()	  { return m_polygonBody;}
-
 
 protected:
 
@@ -22,7 +22,6 @@ protected:
 
 	// 物理物体
 	P2Body m_polygonBody;
-
 };
 
 // 生成場

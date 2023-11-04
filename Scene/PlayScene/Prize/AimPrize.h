@@ -11,6 +11,7 @@ public:
 	void Operation() const override {}
 	void Update() override;
 	void Render() override;
+	const char32_t* GetName() override { return U"Aim";}
 	int GetScore() override { return 50; }
 };
 
