@@ -25,7 +25,7 @@ void CraneBody::Initialize(P2World& world)
 
 	m_drawTexture = std::make_unique<DrawTexture>();
 	// 使用する画像
-	m_drawTexture->AddTexture(U"Body",U"../Resources/Textures/KariCrane.png");
+	m_drawTexture->AddTexture(U"Body",U"../Resources/Textures/CraneBody.png");
 
 	// テクスチャの表示位置
 	constexpr Vec2 BasePos{ 40, 80 };

@@ -11,13 +11,14 @@ public:
 	void Operation() const override {}
 	void Update() override;
 	void Render() override;
+	int GetScore() override { return 50; }
 };
 
 class AimPrizeFactory : public IPrizeFactory
 {
 public:
-	AimPrizeFactory();
-	~AimPrizeFactory();
+	AimPrizeFactory() = default;
+	~AimPrizeFactory() = default;
 
 	// 生成する
 	AimPrizeProduct* FactoryMethod(P2World world) const override

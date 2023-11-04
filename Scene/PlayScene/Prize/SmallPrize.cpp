@@ -1,18 +1,10 @@
 ﻿#include "../../../stdafx.h"
 #include "SmallPrize.h"
 
-SmallPrizeFactory::SmallPrizeFactory()
-{
-}
-
-SmallPrizeFactory::~SmallPrizeFactory()
-{
-}
-
 SmallPrizeProduct::SmallPrizeProduct(P2World world)
 {
-
-	m_polygonBody = world.createQuad(P2Dynamic, Vec2(),Quad(Rect(20.0f,20.0f,20.0f,20.0)));
+	Rect::value_type scale = 20;
+	m_polygonBody = world.createQuad(P2Dynamic, Vec2(),Quad(Rect(scale, scale, scale, scale)));
 	m_polygonBody.setGravityScale(m_weight);
 
 }

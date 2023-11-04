@@ -3,7 +3,9 @@
 
 #include "IPrizeFactory.h"
 #include "SmallPrize.h"
+#include "BigPrize.h"
 #include "AimPrize.h"
+#include "RescuePrize.h"
 #include "../Effect/AcquisitionEffect.h"
 
 PrizeManager::PrizeManager()
@@ -16,36 +18,17 @@ PrizeManager::~PrizeManager()
 
 void PrizeManager::Initialize(P2World world)
 {
+	m_score = 0;
 
-	//m_effect = std::make_unique<AcquisitionEffect>(Vec2(1050, 730));
-
-	SmallPrizeFactory* smallPrizeFac = new SmallPrizeFactory();
-
-	// どうでもよい景品
-	for (int i = 0; i < 30; i++)
-	{
-		SmallPrizeProduct* smallPrizeObj = smallPrizeFac->FactoryMethod(world);
-
-		smallPrizeObj->SetPos(Vec2(40.0f + (20 * i) , 200.0f));
-
-		// 生成
-		m_prizes.push_back(smallPrizeObj);
-
-		//delete smallPrizeObj;
-
-	}
-	delete smallPrizeFac;
+	// どうでもいい景品
+	CreatePrize(new SmallPrizeFactory(), world, 100);
 
 	// 狙い景品
-	AimPrizeFactory* aimPrizeFac = new AimPrizeFactory();
-	AimPrizeProduct* aimPrizeObj = aimPrizeFac->FactoryMethod(world);
+	CreatePrize(new AimPrizeFactory(), world, 20);
 
-	aimPrizeObj->SetPos(Vec2(360.0f, 400.0f));
+	CreatePrize(new BigPrizeFactory(),world,10);
 
-	m_prizes.push_back(aimPrizeObj);
-
-	//delete aimPrizeObj;
-	delete aimPrizeFac;
+	CreatePrize(new RescuePrizeFactory(), world, 1);
 
 }
 
@@ -66,6 +49,8 @@ void PrizeManager::Update()
 		{
 			prizes->SetPos(Vec2(100, 0));
 
+			m_score += prizes->GetScore();
+
 			m_effect.add<AcquisitionEffect>(Vec2(1050, 730));
 
 		}
@@ -81,5 +66,24 @@ void PrizeManager::Render()
 	{
 		prizes->Render();
 	}
+
+}
+
+void PrizeManager::CreatePrize(IPrizeFactory* prize, P2World world,int num)
+{
+
+	for (int i = 0; i < num; i++)
+	{
+		//IPrizeProduct* prizes = prize;
+
+		IPrizeProduct* prizeObj = prize->FactoryMethod(world);
+
+		constexpr RectF shape{ 100, 100, 700, 300 };
+		prizeObj->SetPos(RandomVec2(shape));
+		// 生成
+		m_prizes.push_back(prizeObj);
+	}
+
+	delete prize;
 
 }

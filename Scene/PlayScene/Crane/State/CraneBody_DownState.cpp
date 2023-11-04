@@ -36,9 +36,12 @@ void CraneBody_DownState::Update()
 {
 	Vec2 bodyPos = m_craneComponent->GetPos();
 
-	m_accelerator += m_craneComponent->GetAccelerator().x;
+	if (!is_moved)
+	{
+		m_accelerator += (float)m_craneComponent->GetAccelerator().x;
+	}
 
-	if (bodyPos.y >= MAX_DOWN)
+	if (bodyPos.y >= MAX_DOWN || KeySpace.pressed())
 	{
 		m_accelerator = 0.0f;
 		is_moved = true;

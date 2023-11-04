@@ -2,6 +2,7 @@
 
 class IPrizeProduct;
 class AcquisitionEffect;
+class IPrizeFactory;
 
 class PrizeManager
 {
@@ -15,6 +16,16 @@ public:
 
 	void Render();
 
+	// スコアを返します 
+	int GetScore() { return m_score; }
+
+	/// @brief 景品を生成します
+	/// @param prize 景品の種類
+	/// @param world 物理空間
+	/// @param num 総数
+	void CreatePrize(IPrizeFactory* prize, P2World world, int num);
+
+
 private:
 
 	// プライズリスト
@@ -24,5 +35,8 @@ private:
 	Effect	m_effect;
 
 	double m_time;
+
+	// スコア記録
+	int m_score;
 
 };

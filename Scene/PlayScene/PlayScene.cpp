@@ -4,6 +4,7 @@
 #include "Effect/AcquisitionEffect.h"
 #include "Field/Field.h"
 #include "Prize/PrizeManager.h"
+#include "../../Libraries/Yamamoto/Numeral.h"
 
 PlayScene::PlayScene() :
 	MyClass::Scene()
@@ -12,6 +13,9 @@ PlayScene::PlayScene() :
 
 void PlayScene::Initialize()
 {
+
+	s3d::Scene::SetBackground(Palette::Black);
+		
 	// 2D 物理演算のシミュレーションステップ（秒）
 	constexpr double StepTime = (1.0 / 200.0);
 	StepTime;
@@ -29,6 +33,11 @@ void PlayScene::Initialize()
 	m_field->Initialize(*m_p2World.get());
 
 	m_effect = std::make_unique<AcquisitionEffect>(Vec2(1000,600));
+
+	m_numeral = std::make_unique<Numeral>();
+	m_numeral->LoadTexture(U"../Resources/Textures/number.png");
+	m_numeral->SetPosition(Vec2(1100, 70));
+	m_numeral->SetSpace(5.0f);
 
 	m_prizeManager = std::make_unique<PrizeManager>();
 	m_prizeManager->Initialize(*m_p2World.get());
@@ -48,14 +57,21 @@ void PlayScene::Update()
 	m_prizeManager->Update();
 	m_craneBody->Update(*m_p2World.get());
 
+	m_numeral->SetNumber(m_prizeManager->GetScore());
+
 }
 
 void PlayScene::Render()
 {
+	m_prizeManager->Render();
 
 	m_craneBody->Render();
-	m_prizeManager->Render();
+
 	m_field->Render();
+
+
+
+	m_numeral->Render();
 
 	m_effect->update(s3d::Scene::FrameCount());
 
