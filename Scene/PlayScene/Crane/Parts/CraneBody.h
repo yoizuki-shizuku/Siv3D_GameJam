@@ -66,6 +66,18 @@ public:
 	// アーム開閉状況を変更する
 	void SetOpenFlag(bool flag) { m_openFlag = flag; }
 
+	// アーム可動回数
+	int GetCount() {return m_count;}
+
+	// 可動回数加算
+	void CountPuls() { m_count++; }
+
+	// 可動回数リセット
+	void CountReset() { m_count = 0; }
+
+	// 最大稼働量
+	int MaxMoved();
+
 private:
 
 	// アームパーツクラス
@@ -75,6 +87,10 @@ private:
 
 	// 初期位置
 	Vec2 m_firstPos;
+
+	// 可動回数
+	int m_count;
+
 	//// 加速度
 	//Vec2 m_accelerator;
 	//// 最大加速度

@@ -36,11 +36,11 @@ void CraneBody_ReturnState::Update()
 	// 初期位置まで移動 (到着時停止力を働かせる)
 	if (bodyPos.x <= bodyParts->GetFirstPos().x - 80)
 	{
-		m_accelerator += bodyParts->GetAccelerator().x * 0.4;
+		m_accelerator += (float)bodyParts->GetAccelerator().x * 0.4;
 	}
 	else
 	{
-		m_accelerator -= bodyParts->GetBrake().x;
+		m_accelerator -= (float)bodyParts->GetBrake().x;
 	}
 
 	// 上限下限設定
@@ -65,6 +65,9 @@ void CraneBody_ReturnState::Update()
 
 			if (m_openTime >= TRANSITION_TIME)
 			{
+
+				bodyParts->CountPuls();
+
 				// アイドリング状態へ遷移
 				m_craneComponent->GetStateContext()->TransitionTo(new CraneBody_IdlingState);
 			}

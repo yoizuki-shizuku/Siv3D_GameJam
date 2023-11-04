@@ -63,7 +63,6 @@ void CraneArm::Render()
 {
 	// 描画
 	m_drawTexture->Draw(U"Arm");
-	m_polygonBody.drawWireframe();
 
 }
 
