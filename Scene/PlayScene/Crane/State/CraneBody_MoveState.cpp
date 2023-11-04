@@ -29,17 +29,22 @@ void CraneBody_MoveState::Update()
 
 	if (KeySpace.pressed() && !is_moved)
 	{
+
 		m_accelerator += m_craneComponent->GetAccelerator().x;
 
 	}
 	else
 	{
 		m_accelerator -= m_craneComponent->GetBrake().x;
+
 	}
 
 	// 横移動最低値より超えており、スペースが離された瞬間
-	if (bodyParts->GetFirstPos().x - MIN_POS_X >=
-		bodyPos.x && KeySpace.up() && !is_moved) 		is_moved = true;
+	if (bodyParts->GetFirstPos().x - MIN_POS_X >= bodyPos.x
+		&& KeySpace.up() && !is_moved) 		is_moved = true;
+
+	// 上限設定
+	if(bodyPos.x <= 270) is_moved = true;
 
 	// 上限下限設定
 	m_accelerator = std::min(std::max(m_accelerator, 0.0f), (float)m_craneComponent->GetMaxAccelerator().x);
