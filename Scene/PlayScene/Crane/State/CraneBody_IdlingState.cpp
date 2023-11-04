@@ -30,10 +30,13 @@ void CraneBody_IdlingState::Update()
 	CraneBody* bodyParts = dynamic_cast<CraneBody*>(m_craneComponent);
 	bodyParts->SetOpenFlag(false);
 
-	if (KeySpace.pressed())
+	// アームがとじていたら
+	if (dynamic_cast<CraneArm*>(bodyParts->GetChildren(U"Arm"))->GetClose())
 	{
-		// ムーブ状態に遷移する
-		m_craneComponent->GetStateContext()->TransitionTo(new CraneBody_MoveState());
+		if (KeySpace.pressed())
+		{
+			// ムーブ状態に遷移する
+			m_craneComponent->GetStateContext()->TransitionTo(new CraneBody_MoveState());
+		}
 	}
-
 }
