@@ -5,6 +5,7 @@ class AcquisitionEffect;
 class IPrizeFactory;
 class DrawTexture;
 class Numeral;
+class Gaming;
 
 class PrizeManager
 {
@@ -63,5 +64,10 @@ private:
 	float m_animationTime_Rescue;
 
 	std::unique_ptr<Numeral>			m_scoreRender;
+	std::unique_ptr<Gaming>				m_gamingTex;
+
+	Audio m_SENomal;
+
+	Audio m_SERescue;
 
 };

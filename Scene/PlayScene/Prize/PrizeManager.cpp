@@ -10,6 +10,7 @@
 
 #include "../../../Libraries/Nakamura/DrawTexture.hpp"
 #include "../../../Libraries/Yamamoto/Numeral.h"
+#include "../../../Libraries/Yamamoto/Gaming.h"
 
 #define ANIM_VERTICAL	450
 #define ANIM_BESIDE		750
@@ -31,13 +32,14 @@ void PrizeManager::Initialize(P2World world)
 	m_scoreRender = std::make_unique<Numeral>();
 	m_scoreRender->LoadTexture(U"../Resources/Textures/number.png");
 
+	m_gamingTex = std::make_unique<Gaming>();
+	m_gamingTex->LoadTexture(U"../Resources/Textures/SpacePress.png");
+
 	//U"../Resources/Textures/CraneBody.png"
 	m_drawTexture->AddTexture(U"Small",U"../Resources/Textures/SmallPrize.png");
 	m_drawTexture->AddTexture(U"Aim", U"../Resources/Textures/AimPrize.png");
 	m_drawTexture->AddTexture(U"Big", U"../Resources/Textures/BigPrize.png");
 	m_drawTexture->AddTexture(U"Rescue", U"../Resources/Textures/RescuePrize.png");
-
-	m_drawTexture->AddTexture(U"Space", U"../Resources/Textures/SpacePress.png");
 
 	// どうでもいい景品
 	CreatePrize(new SmallPrizeFactory(), world, 100,-100);
@@ -50,6 +52,10 @@ void PrizeManager::Initialize(P2World world)
 
 	// 救う景品
 	CreatePrize(new RescuePrizeFactory(), world, 1,100);
+
+	// SE取得
+	m_SENomal = Audio{ U"../Resources/Audio/28mp3", Loop::No };
+	m_SERescue = Audio{ U"../Resources/Audio/パンパカ.mp3", Loop::No };
 
 }
 
@@ -72,13 +78,19 @@ void PrizeManager::Update()
 			if (m_prizes[i]->GetName() == U"Rescue")
 			{
 				m_rescueFlag = true;
+				m_SERescue.play(1s);
 			}
-
+			else
+			{
+				m_SENomal.play(1s);
+			}
 
 			m_score += m_prizes[i]->GetScore();
 			m_effect.add<AcquisitionEffect>(Vec2(1050, 730));
 
 			m_prizes.remove(m_prizes[i]);
+
+
 
 		}
 	}
@@ -139,8 +151,9 @@ void PrizeManager::Render_Result()
 			m_scoreRender->SetNumber(m_score);
 		}
 
-		m_drawTexture->SetTexInfo(U"Space", Vec2(sceneHalfSizeX, sceneHalfSizeY - 200), 1.0);
-		m_drawTexture->Draw(U"Space");
+		m_gamingTex->Update();
+		m_gamingTex->SetPosition(Vec2(sceneHalfSizeX / 1.5, sceneHalfSizeY + Easing::Circ(m_animationTime_Rescue) * 230));
+		m_gamingTex->Render();
 
 		m_scoreRender->Render();
 	}
