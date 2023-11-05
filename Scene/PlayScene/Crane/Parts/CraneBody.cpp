@@ -13,7 +13,7 @@
 #define BRAKE_VAL Vec2(0.3,1.2f)
 
 // 最大稼働量
-#define MAX_MOVE 1
+#define MAX_MOVE 5
 
 CraneBody::CraneBody(Vec2 pos):
 	m_openFlag()
