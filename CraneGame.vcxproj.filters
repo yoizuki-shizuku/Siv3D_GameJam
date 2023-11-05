@@ -192,9 +192,6 @@
     <ClCompile Include="Libraries\Nakamura\DrawTexture.cpp">
       <Filter>Libraries\Nakamura\DrawTexture</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\RDebugScene\RDebugScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\MyTransition.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -245,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="Scene\PlayScene\Prize\RescuePrize.cpp">
       <Filter>Scene\PlayScene\Prize</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\Yamamoto\Gaming.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -893,9 +893,6 @@
     <ClInclude Include="Libraries\Nakamura\DrawTexture.hpp">
       <Filter>Libraries\Nakamura\DrawTexture</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\RDebugScene\RDebugScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Easing.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -958,6 +955,9 @@
     </ClInclude>
     <ClInclude Include="Scene\PlayScene\Prize\RescuePrize.h">
       <Filter>Scene\PlayScene\Prize</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\Yamamoto\Gaming.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

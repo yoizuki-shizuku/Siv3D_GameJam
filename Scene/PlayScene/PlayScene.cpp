@@ -99,13 +99,17 @@ void PlayScene::Render()
 
 	m_field->Render();
 
-	m_numeral->Render();
+
 	m_tex->Render();
 	m_craneCount->Render();
 
 	if (m_craneBody->MaxMoved() - m_craneBody->GetCount() <= 0)
 	{
 		m_prizeManager->Render_Result();
+	}
+	else
+	{
+		m_numeral->Render();
 	}
 
 	m_effect->update(s3d::Scene::FrameCount());

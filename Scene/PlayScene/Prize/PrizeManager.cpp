@@ -119,13 +119,13 @@ void PrizeManager::Render_Result()
 	int sceneHalfSizeY = (Scene::Size() / 2).y;
 
 	// 横に伸ばす
-	m_animationTime_Beside += (float)Scene::DeltaTime() * 0.7;
+	m_animationTime_Beside += static_cast<float>(Scene::DeltaTime() * 0.7);
 
 	// 縦に伸ばす
-	m_animationTime_Vertical += (float)m_animationTime_Beside >= 1.0 ? Scene::DeltaTime() : 0;
+	m_animationTime_Vertical += static_cast<float>(m_animationTime_Beside >= 1.0 ? Scene::DeltaTime() : 0);
 
 	// アニメーション
-	m_animationTime_Rescue += (float)m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0;
+	m_animationTime_Rescue += static_cast<float>(m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0);
 
 	//　上限下限値設定
 	m_animationTime_Beside = Clamp(m_animationTime_Beside, 0.0f, 1.0f);
@@ -155,7 +155,7 @@ void PrizeManager::Render_Result()
 		}
 
 		m_gamingTex->Update();
-		m_gamingTex->SetPosition(Vec2(sceneHalfSizeX / 1.5, sceneHalfSizeY + Easing::Circ(m_animationTime_Rescue) * 230));
+		m_gamingTex->SetPosition(Vec2(sceneHalfSizeX / 1.5, sceneHalfSizeY + Easing::Circ(m_animationTime_Rescue) * 100));
 		m_gamingTex->Render();
 
 		m_scoreRender->Render();
