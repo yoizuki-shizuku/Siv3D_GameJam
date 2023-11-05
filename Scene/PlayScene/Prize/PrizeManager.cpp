@@ -75,7 +75,10 @@ void PrizeManager::Update()
 		// 規定値よりも下に行ったら消す
 		if (m_prizes[i]->GetPos().y >= 800)
 		{
-			if (m_prizes[i]->GetName() == U"Rescue")
+
+			bool rescueFlag = m_prizes[i]->GetName() == U"Rescue";
+
+			if (rescueFlag)
 			{
 				m_rescueFlag = true;
 				m_SERescue.play(1s);
@@ -116,13 +119,13 @@ void PrizeManager::Render_Result()
 	int sceneHalfSizeY = (Scene::Size() / 2).y;
 
 	// 横に伸ばす
-	m_animationTime_Beside += Scene::DeltaTime() * 0.7f;
+	m_animationTime_Beside += (float)Scene::DeltaTime() * 0.7;
 
 	// 縦に伸ばす
-	m_animationTime_Vertical += m_animationTime_Beside >= 1.0f ? Scene::DeltaTime() : 0;
+	m_animationTime_Vertical += (float)m_animationTime_Beside >= 1.0 ? Scene::DeltaTime() : 0;
 
 	// アニメーション
-	m_animationTime_Rescue += m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0;
+	m_animationTime_Rescue += (float)m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0;
 
 	//　上限下限値設定
 	m_animationTime_Beside = Clamp(m_animationTime_Beside, 0.0f, 1.0f);
@@ -142,7 +145,7 @@ void PrizeManager::Render_Result()
 	{
 		m_scoreRender->SetPosition(Vec2(sceneHalfSizeX, sceneHalfSizeY - 100));
 
-		if (m_animationTime_Rescue < 1.0)
+		if (m_animationTime_Rescue < 1.0f)
 		{
 			m_scoreRender->SetNumber(Random() * 1000);
 		}
