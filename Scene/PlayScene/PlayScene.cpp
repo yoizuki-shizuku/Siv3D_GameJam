@@ -7,6 +7,8 @@
 #include "../../Libraries/Yamamoto/Numeral.h"
 #include "../../Libraries/Yamamoto/Gaming.h"
 
+#include "../TitleScene/TitleScene.h"
+
 PlayScene::PlayScene() :
 	MyClass::Scene()
 {
@@ -77,6 +79,12 @@ void PlayScene::Update()
 	m_numeral->SetNumber(m_prizeManager->GetScore());
 	m_craneCount->SetNumber(m_craneBody->MaxMoved() - m_craneBody->GetCount());
 
+	if (KeySpace.down() && m_prizeManager->GetPlayFin())
+	{
+		ChangeScene<TitleScene>();
+		m_bgm.stop(1s);
+	}
+
 }
 
 void PlayScene::Render()
@@ -91,9 +99,18 @@ void PlayScene::Render()
 
 	m_field->Render();
 
-	m_numeral->Render();
+
 	m_tex->Render();
 	m_craneCount->Render();
+
+	if (m_craneBody->MaxMoved() - m_craneBody->GetCount() <= 0)
+	{
+		m_prizeManager->Render_Result();
+	}
+	else
+	{
+		m_numeral->Render();
+	}
 
 	m_effect->update(s3d::Scene::FrameCount());
 

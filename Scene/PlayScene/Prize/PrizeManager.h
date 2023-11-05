@@ -5,6 +5,7 @@ class AcquisitionEffect;
 class IPrizeFactory;
 class DrawTexture;
 class Numeral;
+class Gaming;
 
 class PrizeManager
 {
@@ -30,6 +31,7 @@ public:
 	/// @param num 総数
 	void CreatePrize(IPrizeFactory* prize, P2World world, int num,int pulsPosY = 0);
 
+	bool GetPlayFin();
 
 private:
 
@@ -61,6 +63,11 @@ private:
 	// 救出対象アニメーション
 	float m_animationTime_Rescue;
 
-	std::unique_ptr<Numeral>			m_craneCount;
+	std::unique_ptr<Numeral>			m_scoreRender;
+	std::unique_ptr<Gaming>				m_gamingTex;
+
+	Audio m_SENomal;
+
+	Audio m_SERescue;
 
 };

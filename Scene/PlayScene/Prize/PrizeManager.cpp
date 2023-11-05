@@ -10,6 +10,7 @@
 
 #include "../../../Libraries/Nakamura/DrawTexture.hpp"
 #include "../../../Libraries/Yamamoto/Numeral.h"
+#include "../../../Libraries/Yamamoto/Gaming.h"
 
 #define ANIM_VERTICAL	450
 #define ANIM_BESIDE		750
@@ -28,8 +29,11 @@ void PrizeManager::Initialize(P2World world)
 
 	m_drawTexture = std::make_unique<DrawTexture>();
 
-	m_craneCount = std::make_unique<Numeral>();
+	m_scoreRender = std::make_unique<Numeral>();
+	m_scoreRender->LoadTexture(U"../Resources/Textures/number.png");
 
+	m_gamingTex = std::make_unique<Gaming>();
+	m_gamingTex->LoadTexture(U"../Resources/Textures/SpacePress.png");
 
 	//U"../Resources/Textures/CraneBody.png"
 	m_drawTexture->AddTexture(U"Small",U"../Resources/Textures/SmallPrize.png");
@@ -49,6 +53,10 @@ void PrizeManager::Initialize(P2World world)
 	// 救う景品
 	CreatePrize(new RescuePrizeFactory(), world, 1,100);
 
+	// SE取得
+	m_SENomal = Audio{ U"../Resources/Audio/28mp3", Loop::No };
+	m_SERescue = Audio{ U"../Resources/Audio/パンパカ.mp3", Loop::No };
+
 }
 
 void PrizeManager::Update()
@@ -67,16 +75,25 @@ void PrizeManager::Update()
 		// 規定値よりも下に行ったら消す
 		if (m_prizes[i]->GetPos().y >= 800)
 		{
-			if (m_prizes[i]->GetName() == U"Rescue")
+
+			bool rescueFlag = m_prizes[i]->GetName() == U"Rescue";
+
+			if (rescueFlag)
 			{
 				m_rescueFlag = true;
+				m_SERescue.play(1s);
 			}
-
+			else
+			{
+				m_SENomal.play(1s);
+			}
 
 			m_score += m_prizes[i]->GetScore();
 			m_effect.add<AcquisitionEffect>(Vec2(1050, 730));
 
 			m_prizes.remove(m_prizes[i]);
+
+
 
 		}
 	}
@@ -102,13 +119,13 @@ void PrizeManager::Render_Result()
 	int sceneHalfSizeY = (Scene::Size() / 2).y;
 
 	// 横に伸ばす
-	m_animationTime_Beside += Scene::DeltaTime() * 0.7f;
+	m_animationTime_Beside += static_cast<float>(Scene::DeltaTime() * 0.7);
 
 	// 縦に伸ばす
-	m_animationTime_Vertical += m_animationTime_Beside >= 1.0f ? Scene::DeltaTime() : 0;
+	m_animationTime_Vertical += static_cast<float>(m_animationTime_Beside >= 1.0 ? Scene::DeltaTime() : 0);
 
 	// アニメーション
-	m_animationTime_Rescue += m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0;
+	m_animationTime_Rescue += static_cast<float>(m_animationTime_Vertical >= 1.0f ? Scene::DeltaTime() : 0);
 
 	//　上限下限値設定
 	m_animationTime_Beside = Clamp(m_animationTime_Beside, 0.0f, 1.0f);
@@ -126,15 +143,28 @@ void PrizeManager::Render_Result()
 	// 数字描画
 	if (m_animationTime_Vertical >= 1.0f)
 	{
-		m_craneCount->SetPosition(Vec2(sceneHalfSizeX, sceneHalfSizeY - 200));
-		m_craneCount->SetNumber(m_score);
-		m_craneCount->Render();
+		m_scoreRender->SetPosition(Vec2(sceneHalfSizeX, sceneHalfSizeY - 100));
+
+		if (m_animationTime_Rescue < 1.0f)
+		{
+			m_scoreRender->SetNumber(Random() * 1000);
+		}
+		else
+		{
+			m_scoreRender->SetNumber(m_score);
+		}
+
+		m_gamingTex->Update();
+		m_gamingTex->SetPosition(Vec2(sceneHalfSizeX / 1.5, sceneHalfSizeY + Easing::Circ(m_animationTime_Rescue) * 100));
+		m_gamingTex->Render();
+
+		m_scoreRender->Render();
 	}
 
 	// レスキュー対象描画
 	if (m_rescueFlag)
 	{
-		m_drawTexture->SetTexInfo(U"Rescue", Vec2(sceneHalfSizeX, sceneHalfSizeY + 100), m_animationTime_Rescue);
+		m_drawTexture->SetTexInfo(U"Rescue", Vec2(sceneHalfSizeX, sceneHalfSizeY + 100), Easing::Bounce(m_animationTime_Rescue) * 1.2f);
 		m_drawTexture->Draw(U"Rescue");
 	}
 }
@@ -156,4 +186,9 @@ void PrizeManager::CreatePrize(IPrizeFactory* prize, P2World world,int num, int 
 
 	delete prize;
 
+}
+
+bool PrizeManager::GetPlayFin()
+{
+	return m_animationTime_Rescue >= 1.0f;
 }

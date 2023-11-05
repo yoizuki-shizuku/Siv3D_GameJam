@@ -137,7 +137,6 @@
     <ClCompile Include="Scene\PlayScene\Prize\PrizeManager.cpp" />
     <ClCompile Include="Scene\PlayScene\Prize\RescuePrize.cpp" />
     <ClCompile Include="Scene\PlayScene\Prize\SmallPrize.cpp" />
-    <ClCompile Include="Scene\RDebugScene\RDebugScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -364,7 +363,6 @@
     <ClInclude Include="Scene\PlayScene\Prize\BigPrize.h" />
     <ClInclude Include="Scene\PlayScene\Prize\RescuePrize.h" />
     <ClInclude Include="Scene\PlayScene\Prize\SmallPrize.h" />
-    <ClInclude Include="Scene\RDebugScene\RDebugScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
