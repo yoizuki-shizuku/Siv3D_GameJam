@@ -17,7 +17,7 @@ TitleScene::TitleScene()
 
 void TitleScene::Initialize()
 {
-	s3d::Scene::SetBackground(Palette::White);
+	s3d::Scene::SetBackground(Palette::Black);
 
 	// 最初はスタート
 	is_selectFlag = true;
@@ -69,10 +69,6 @@ void TitleScene::Update()
 
 void TitleScene::Render()
 {
-	Print << U"TitleScene";
-
-	is_selectFlag ? Print << U"Play" : Print << U"Exit";
-
 	// 紐の描画
 	m_bez.draw(BEZ_WIDTH, HSV(360.0 - (s3d::Scene::Time() * 60.0),0.5,0.8));
 
