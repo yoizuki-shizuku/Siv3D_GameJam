@@ -30,6 +30,7 @@ public:
 	/// @param num 総数
 	void CreatePrize(IPrizeFactory* prize, P2World world, int num,int pulsPosY = 0);
 
+	bool GetPlayFin();
 
 private:
 
@@ -61,6 +62,6 @@ private:
 	// 救出対象アニメーション
 	float m_animationTime_Rescue;
 
-	std::unique_ptr<Numeral>			m_craneCount;
+	std::unique_ptr<Numeral>			m_scoreRender;
 
 };

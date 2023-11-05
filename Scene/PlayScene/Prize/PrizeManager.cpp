@@ -28,14 +28,16 @@ void PrizeManager::Initialize(P2World world)
 
 	m_drawTexture = std::make_unique<DrawTexture>();
 
-	m_craneCount = std::make_unique<Numeral>();
-
+	m_scoreRender = std::make_unique<Numeral>();
+	m_scoreRender->LoadTexture(U"../Resources/Textures/number.png");
 
 	//U"../Resources/Textures/CraneBody.png"
 	m_drawTexture->AddTexture(U"Small",U"../Resources/Textures/SmallPrize.png");
 	m_drawTexture->AddTexture(U"Aim", U"../Resources/Textures/AimPrize.png");
 	m_drawTexture->AddTexture(U"Big", U"../Resources/Textures/BigPrize.png");
 	m_drawTexture->AddTexture(U"Rescue", U"../Resources/Textures/RescuePrize.png");
+
+	m_drawTexture->AddTexture(U"Space", U"../Resources/Textures/SpacePress.png");
 
 	// どうでもいい景品
 	CreatePrize(new SmallPrizeFactory(), world, 100,-100);
@@ -126,15 +128,27 @@ void PrizeManager::Render_Result()
 	// 数字描画
 	if (m_animationTime_Vertical >= 1.0f)
 	{
-		m_craneCount->SetPosition(Vec2(sceneHalfSizeX, sceneHalfSizeY - 200));
-		m_craneCount->SetNumber(m_score);
-		m_craneCount->Render();
+		m_scoreRender->SetPosition(Vec2(sceneHalfSizeX, sceneHalfSizeY - 100));
+
+		if (m_animationTime_Rescue < 1.0)
+		{
+			m_scoreRender->SetNumber(Random() * 1000);
+		}
+		else
+		{
+			m_scoreRender->SetNumber(m_score);
+		}
+
+		m_drawTexture->SetTexInfo(U"Space", Vec2(sceneHalfSizeX, sceneHalfSizeY - 200), 1.0);
+		m_drawTexture->Draw(U"Space");
+
+		m_scoreRender->Render();
 	}
 
 	// レスキュー対象描画
 	if (m_rescueFlag)
 	{
-		m_drawTexture->SetTexInfo(U"Rescue", Vec2(sceneHalfSizeX, sceneHalfSizeY + 100), m_animationTime_Rescue);
+		m_drawTexture->SetTexInfo(U"Rescue", Vec2(sceneHalfSizeX, sceneHalfSizeY + 100), Easing::Bounce(m_animationTime_Rescue) * 1.2f);
 		m_drawTexture->Draw(U"Rescue");
 	}
 }
@@ -156,4 +170,9 @@ void PrizeManager::CreatePrize(IPrizeFactory* prize, P2World world,int num, int 
 
 	delete prize;
 
+}
+
+bool PrizeManager::GetPlayFin()
+{
+	return m_animationTime_Rescue >= 1.0f;
 }
