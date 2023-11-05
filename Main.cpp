@@ -4,6 +4,8 @@
 
 void Main()
 {
+	// タイトルを変更
+	Window::SetTitle(U"CraneResque");
 	//	ウィンドウの大きさを変更
 	Window::Resize(1280, 720);
 
