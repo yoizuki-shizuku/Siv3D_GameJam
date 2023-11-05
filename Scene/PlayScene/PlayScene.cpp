@@ -53,6 +53,9 @@ void PlayScene::Initialize()
 	m_prizeManager = std::make_unique<PrizeManager>();
 	m_prizeManager->Initialize(*m_p2World.get());
 
+	//	BGMの読み込みと再生
+	m_bgm = Audio{ U"../Resources/Audio/ナウいディスコとゲームセンター.mp3", Loop::Yes };
+	m_bgm.play(1s);
 }
 
 void PlayScene::Update()
@@ -74,15 +77,14 @@ void PlayScene::Update()
 	m_numeral->SetNumber(m_prizeManager->GetScore());
 	m_craneCount->SetNumber(m_craneBody->MaxMoved() - m_craneBody->GetCount());
 
-	m_prizeManager->Update();  
-
 }
 
 void PlayScene::Render()
 {
 	// 背景を描画する　(適応すると何故かエフェクトが消えてしまう)
-	//m_backTex->draw();
+	m_backTex->draw();
 
+	m_prizeManager->Update();
 	m_prizeManager->Render();
 
 	m_craneBody->Render();

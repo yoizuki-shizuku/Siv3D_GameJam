@@ -45,6 +45,9 @@ void TitleScene::Initialize()
 	m_bezMiddlePos = { m_logoInfo.POS.x, m_logoInfo.POS.y / 2 };
 	m_bez = { m_bezStartPos ,m_bezMiddlePos ,Vec2{ m_logoInfo.POS.x , m_logoInfo.POS.y - 50} };
 
+	//	BGMの読み込みと再生
+	m_bgm = Audio{ U"../Resources/Audio/Amusement-Arcade.mp3", Loop::Yes };
+	m_bgm.play(1s);
 }
 
 void TitleScene::Update()
@@ -64,6 +67,7 @@ void TitleScene::Update()
 	if (KeySpace.down())
 	{
 		is_selectFlag ? ChangeScene<PlayScene>() : ExitGame();
+		m_bgm.stop(1s);
 	}
 }
 
