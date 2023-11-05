@@ -44,4 +44,7 @@ private:
 	// 2D 物理演算のシミュレーション蓄積時間（秒）
 	double m_accumulatedTime = 0.0;
 
+	//	BGM
+	Audio m_bgm;
+
 };

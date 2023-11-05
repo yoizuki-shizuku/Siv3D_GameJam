@@ -60,4 +60,8 @@ private:
 	Vec2 m_bezMiddlePos;
 	const int BEZ_WIDTH = 4;
 	const double BEZ_SPEED = 0.0005;
+
+	//	BGM
+	Audio m_bgm;
+
 };

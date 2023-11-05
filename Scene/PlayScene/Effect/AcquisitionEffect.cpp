@@ -1,6 +1,6 @@
 ﻿#include "AcquisitionEffect.h"
 
-#define PARTICLE_NUM	(80)	//	パーティクルの発生数
+#define PARTICLE_NUM	(50)	//	パーティクルの発生数
 #define PARTICLE_SPEED	(500.0)	//	パーティクルの移動速度
 
 //	コンストラクタの引数にパーティクルの生成位置を入れる
