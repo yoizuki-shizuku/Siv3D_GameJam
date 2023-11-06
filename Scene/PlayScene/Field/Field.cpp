@@ -16,7 +16,9 @@ void Field::Initialize(P2World world)
 	m_drawTexture = std::make_unique<DrawTexture>();
 	// 使用する画像
 	m_drawTexture->AddTexture(U"Field", U"../Resources/Textures/Stage.png");
+	m_drawTexture->AddTexture(U"Glass", U"../Resources/Textures/glass.png");
 	m_drawTexture->SetTexInfo(U"Field", Vec2(1280 / 2, 760 / 1.7),1.0f);
+	m_drawTexture->SetTexInfo(U"Glass", Vec2(1280 / 2, 720 / 2),1.0f);
 	// アルファ値 1 以上の領域を Polygon 化する
 	const Polygon polygon = m_drawTexture->GetImage(U"Field").alphaToPolygonCentered(1, AllowHoles::No);
 
@@ -38,6 +40,7 @@ void Field::Render()
 {
 
 	m_drawTexture->Draw(U"Field");
+	m_drawTexture->Draw(U"Glass");
 }
 
 
